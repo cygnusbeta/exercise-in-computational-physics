@@ -59,6 +59,17 @@ def is_line_duplicate(s):
     return duplicate
 
 
+def is_line_duplicate_hex(s):
+    l = list(s)
+    duplicate = False
+    for i, c in enumerate(l):
+        if c == str(hex(i))[2:]:
+            duplicate = True
+            break
+    return duplicate
+
+
+
 def remove_line_duplicate(s_array):
     result = []
     for s in s_array:

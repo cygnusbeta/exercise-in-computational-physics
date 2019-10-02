@@ -4,7 +4,7 @@ import math
 import random
 
 from hw01trumpgame.util import base_10_to_n, fill_to_n_digit, \
-    is_line_duplicate, is_duplicate
+    is_line_duplicate, is_duplicate, is_line_duplicate_hex
 
 
 class CalcRandom:
@@ -15,7 +15,8 @@ class CalcRandom:
         for i in range(self.n):
             while len(c_array) < self.n:
                 c_num = random.randint(0, self.n - 1)
-                c = str(c_num)
+                c_num_hex = hex(c_num)
+                c = str(c_num_hex)[2:]
                 if c not in c_array:
                     c_array.append(c)
         self.num = ''.join(c_array)
@@ -31,7 +32,7 @@ class CalcRandom:
 
 
     def isDuplicate(self):
-        return is_line_duplicate(self.num)
+        return is_line_duplicate_hex(self.num)
 
 
 def main_random():
@@ -47,7 +48,7 @@ def main_random():
             duplicate = rnd.isDuplicate()
             if not duplicate:
                 count_not_duplicate += 1
-            if j % 10000 == 0:
+            if j % 100 == 0:
                 print('{0} {1}'.format(rnd.num, 'duplicate' if duplicate else ''))
         count_not_duplicate_array.append(count_not_duplicate)
         print('P({0}) = {1}/{2}'.format(n, count_not_duplicate, repeat))
@@ -56,8 +57,8 @@ def main_random():
     print('--- Result ---')
     print()
     for n in range(repeat_min_n, repeat_max_n + 1):
-        print('P({0}) = {1}/{2}'.format(n, count_not_duplicate_array[n - 1], repeat))
-        print('     = {}'.format(count_not_duplicate_array[n - 1] / repeat))
+        print('P({0}) = {1}/{2}'.format(n, count_not_duplicate_array[n - repeat_min_n], repeat))
+        print('     = {}'.format(count_not_duplicate_array[n - repeat_min_n] / repeat))
         print()
 
 if __name__ == '__main__':
