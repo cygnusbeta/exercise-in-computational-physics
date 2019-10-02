@@ -30,30 +30,39 @@ def fill_to_n_digit(s, n):
     return s
 
 
+def is_duplicate(s):
+    l = list(s)
+    duplicate = False
+    for c in l:
+        if l.count(c) > 1:
+            duplicate = True
+            break
+    return duplicate
+
+
 def remove_duplicate(s_array):
     result = []
     for s in s_array:
-        l = list(s)
-        duplicate = False
-        for c in l:
-            if l.count(c) > 1:
-                duplicate = True
-                break
+        duplicate = is_duplicate(s)
         if not duplicate:
             result.append(s)
     return result
 
 
-def remove_line_duplicate(s_array, n):
-    init_array = get_list_arranged(n)
+def is_line_duplicate(s):
+    l = list(s)
+    duplicate = False
+    for i, c in enumerate(l):
+        if c == str(i):
+            duplicate = True
+            break
+    return duplicate
+
+
+def remove_line_duplicate(s_array):
     result = []
     for s in s_array:
-        l = list(s)
-        duplicate = False
-        for i, c in enumerate(l):
-            if c == str(i):
-                duplicate = True
-                break
+        duplicate = is_line_duplicate(s)
         if not duplicate:
             result.append(s)
     return result
