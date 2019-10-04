@@ -12,10 +12,12 @@ def main():
 
 def calc(n):
     # print('n = {}'.format(n))
+    # list_not_duplicate = gen_num_array_hex(n)
     list_arranged = get_list_arranged(n)
     list_not_duplicate = remove_duplicate(list_arranged)
+    # list_not_duplicate = gen_num_array(n)
     print(list_not_duplicate)
-    result = remove_line_duplicate(list_not_duplicate)
+    result = remove_line_duplicate_hex(list_not_duplicate)
     # print(result)
     num = len(result)
     # print(num)

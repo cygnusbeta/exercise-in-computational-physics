@@ -48,8 +48,13 @@ def main_random():
             duplicate = rnd.isDuplicate()
             if not duplicate:
                 count_not_duplicate += 1
-            if j % 100 == 0:
+            if j % 100\
+                    == 0 and j:
                 print('{0} {1}'.format(rnd.num, 'duplicate' if duplicate else ''))
+                # print()
+                # print(
+                #     'P({0}) = {1}/{2}'.format(n, count_not_duplicate, j))
+                # print('     = {}'.format(count_not_duplicate / j))
         count_not_duplicate_array.append(count_not_duplicate)
         print('P({0}) = {1}/{2}'.format(n, count_not_duplicate, repeat))
         print('     = {}'.format(count_not_duplicate / repeat))

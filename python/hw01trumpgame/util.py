@@ -3,6 +3,18 @@
 from pip._vendor.msgpack.fallback import xrange
 
 
+def gen_num_array_hex(n):
+    c_array = dict()
+    progress = 0
+    i = 0
+    while i < progress:
+        # c_num = random.randint(0, n - 1)
+        c_num_hex = hex(c_num)
+        c = str(c_num_hex)[2:]
+        if c not in c_array:
+            c_array.append(c)
+
+
 def get_list_arranged(n):
     # fact = math.factorial(n) + 1
     base_10_array = list(xrange(n ** n))
@@ -74,6 +86,15 @@ def remove_line_duplicate(s_array):
     result = []
     for s in s_array:
         duplicate = is_line_duplicate(s)
+        if not duplicate:
+            result.append(s)
+    return result
+
+
+def remove_line_duplicate_hex(s_array):
+    result = []
+    for s in s_array:
+        duplicate = is_line_duplicate_hex(s)
         if not duplicate:
             result.append(s)
     return result
