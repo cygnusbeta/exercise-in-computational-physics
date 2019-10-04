@@ -3,22 +3,17 @@
 import math
 import random
 
+from pygments.util import xrange
+
 from hw01trumpgame.util import base_10_to_n, fill_to_n_digit, \
     is_line_duplicate, is_duplicate, is_line_duplicate_hex
 
 
 class CalcRandom:
-    def __init__(self, n: int):
+    def __init__(self, n: int, list_arranged: list):
         self.n = n
 
-        c_array = []
-        for i in range(self.n):
-            while len(c_array) < self.n:
-                c_num = random.randint(0, self.n - 1)
-                c_num_hex = hex(c_num)
-                c = str(c_num_hex)[2:]
-                if c not in c_array:
-                    c_array.append(c)
+        c_array = random.sample(list_arranged, len(list_arranged))
         self.num = ''.join(c_array)
         # while True:
         #     num_base10 = random.randint(0, self.n ** self.n - 1)
@@ -36,25 +31,26 @@ class CalcRandom:
 
 
 def main_random():
-    repeat_min_n = 1
+    repeat_min_n = 13
     repeat_max_n = 13
-    repeat = 10 ** 5
+    repeat = 10 ** 6
     count_not_duplicate_array = []
     for n in range(repeat_min_n, repeat_max_n + 1):
         # print(n)
         count_not_duplicate = 0
+        list_arranged = [str(hex(num))[2:] for num in xrange(n)]
         for j in range(repeat):
-            rnd = CalcRandom(n)
+            rnd = CalcRandom(n, list_arranged)
             duplicate = rnd.isDuplicate()
             if not duplicate:
                 count_not_duplicate += 1
-            if j % 100\
+            if j % 10000\
                     == 0 and j:
-                print('{0} {1}'.format(rnd.num, 'duplicate' if duplicate else ''))
-                # print()
-                # print(
-                #     'P({0}) = {1}/{2}'.format(n, count_not_duplicate, j))
-                # print('     = {}'.format(count_not_duplicate / j))
+                # print('{0} {1}'.format(rnd.num, 'duplicate' if duplicate else ''))
+                print()
+                print(
+                    'P({0}) = {1}/{2}'.format(n, count_not_duplicate, j))
+                print('     = {}'.format(count_not_duplicate / j))
         count_not_duplicate_array.append(count_not_duplicate)
         print('P({0}) = {1}/{2}'.format(n, count_not_duplicate, repeat))
         print('     = {}'.format(count_not_duplicate / repeat))
