@@ -5,7 +5,6 @@
 #include <random>
 
 using namespace std;
-#define RAND() (float(rand()/pow(2,15)))
 
 double get_random_0_to_1() {
     // 乱数生成器
