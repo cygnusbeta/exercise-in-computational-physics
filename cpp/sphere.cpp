@@ -7,13 +7,14 @@ using namespace std;
 int main() {
     clock_t start = clock();
 
-    const int n = int(pow(10, 7)), d = 14, interval = int(pow(10, 5));
+    const int n = int(pow(10, 6)), d = 14, interval = int(pow(10, 5));
     int count = 0;
     double *r2s;
     r2s = new double[n];
     Sample *sample;
+    util mt;
     for (int i = 0; i < n; i++) {
-        sample = new Sample(d);
+        sample = new Sample(d, mt);
         if (sample->run()) count++;
 
         if (i % interval == interval - 1 or i == n - 1) {
