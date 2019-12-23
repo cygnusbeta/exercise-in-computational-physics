@@ -11,11 +11,10 @@ int main() {
     int count = 0;
     double *r2s;
     r2s = new double[n];
+    Sample *sample;
     for (int i = 0; i < n; i++) {
-        Sample *sample;
         sample = new Sample(d);
         if (sample->run()) count++;
-        delete sample;
 
         if (i % interval == interval - 1 or i == n - 1) {
             r2s[i] = sample->r2;
