@@ -15,18 +15,37 @@ double get_random_0_to_1() {
     return get_rand_uni_real(mt64);
 }
 
+class Sample {
+public:
+    explicit Sample(int d);
+
+    bool run();
+
+    int d;
+    double r2;
+};
+
+Sample::Sample(int d) {
+    this -> d = d;
+    this -> r2 = 0.0;
+}
+
+bool Sample::run() {
+    for (int j = 0; j < d; j++) {
+        double x_j = get_random_0_to_1();
+        r2 += pow(x_j, 2);
+    }
+    return r2 <= 1;
+}
+
 int main() {
     int n = int(pow(10, 5)), d = 14, count = 0, interval = pow(10, 4);
-    double *r2s = new double[n];
+    auto *r2s = new double[n];
     for (int i = 0; i < n; i++) {
-        double r2 = 0.0;
-        for (int j = 0; j < d; j++) {
-            double x_j = get_random_0_to_1();
-            r2 += pow(x_j, 2);
-        }
-        if (r2 <= 1) count++;
+        Sample sample(d);
+        if (sample.run()) count++;
         if (i % interval == interval - 1 or i == n - 1) {
-            r2s[i] = r2;
+            r2s[i] = sample.r2;
             double v = double(count) / double(i + 1) * pow(2, d);
             double p = double(count) / double(i + 1);
             double q = 1.0 - p;
