@@ -23,7 +23,7 @@ int main() {
             double p = double(count) / double(i + 1);
             double q = 1.0 - p;
             double error = 1.96 * pow(2, d) * sqrt(p * q / double(i + 1));
-            cout << "i + 1 = " << i + 1 << " v = " << v << " ± " << error << "\n";
+            printf("i + 1 = %d v = %f ± %f\n", i + 1, v, error);
         }
     }
 
