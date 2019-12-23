@@ -7,7 +7,7 @@ using namespace std;
 int main() {
     clock_t start = clock();
 
-    const int n = int(pow(10, 7)), d = 20, interval = int(pow(10, 5));
+    const int n = int(pow(10, 8)), d = 20, interval = int(pow(10, 7));
     int count = 0;
     double *r2s;
     r2s = new double[n];
@@ -22,7 +22,7 @@ int main() {
             double p = double(count) / double(i + 1);
             double q = 1.0 - p;
             double error = 1.96 * pow(2, d) * sqrt(p * q / double(i + 1));
-            printf("i + 1 = %d v = %f ± %f\n", i + 1, v, error);
+            printf("d = %d, i + 1 = %d, v = %f ± %f\n", d, i + 1, v, error);
         }
     }
     delete sample;
