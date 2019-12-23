@@ -1,5 +1,4 @@
 #include <iostream>
-//#include <cstdlib>
 #include <cmath>
 #include <random>
 
@@ -16,19 +15,24 @@ double get_random_0_to_1() {
 }
 
 class Sample {
+private:
+    int d;
+
 public:
     explicit Sample(int d);
+    ~Sample();
 
     bool run();
 
-    int d;
     double r2;
 };
 
 Sample::Sample(int d) {
-    this -> d = d;
-    this -> r2 = 0.0;
+    this->d = d;
+    this->r2 = 0.0;
 }
+
+Sample::~Sample() = default;
 
 bool Sample::run() {
     for (int j = 0; j < d; j++) {
@@ -42,10 +46,13 @@ int main() {
     int n = int(pow(10, 5)), d = 14, count = 0, interval = pow(10, 4);
     auto *r2s = new double[n];
     for (int i = 0; i < n; i++) {
-        Sample sample(d);
-        if (sample.run()) count++;
+        Sample *sample;
+        sample = new Sample(d);
+        if (sample->run()) count++;
+        delete sample;
+
         if (i % interval == interval - 1 or i == n - 1) {
-            r2s[i] = sample.r2;
+            r2s[i] = sample->r2;
             double v = double(count) / double(i + 1) * pow(2, d);
             double p = double(count) / double(i + 1);
             double q = 1.0 - p;
@@ -53,4 +60,5 @@ int main() {
             cout << "i + 1 = " << i + 1 << " v = " << v << " ± " << error << "\n";
         }
     }
+    return 0;
 }
