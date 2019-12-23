@@ -5,8 +5,12 @@
 using namespace std;
 
 int main() {
-    int n = int(pow(10, 5)), d = 14, count = 0, interval = pow(10, 4);
-    auto *r2s = new double[n];
+    clock_t start = clock();
+
+    const int n = int(pow(10, 7)), d = 14, interval = int(pow(10, 5));
+    int count = 0;
+    double *r2s;
+    r2s = new double[n];
     for (int i = 0; i < n; i++) {
         Sample *sample;
         sample = new Sample(d);
@@ -22,5 +26,10 @@ int main() {
             cout << "i + 1 = " << i + 1 << " v = " << v << " ± " << error << "\n";
         }
     }
+
+    clock_t end = clock();
+    const int time = int(double(end - start) / CLOCKS_PER_SEC);
+    printf("Process finished. (%d s)\n", time);
+
     return 0;
 }
