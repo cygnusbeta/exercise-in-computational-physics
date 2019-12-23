@@ -7,7 +7,7 @@ using namespace std;
 int main() {
     clock_t start = clock();
 
-    const int n = int(pow(10, 7)), d = 14, interval = int(pow(10, 5));
+    const int n = int(pow(10, 7)), d = 20, interval = int(pow(10, 5));
     int count = 0;
     double *r2s;
     r2s = new double[n];
@@ -25,6 +25,7 @@ int main() {
             printf("i + 1 = %d v = %f ± %f\n", i + 1, v, error);
         }
     }
+    delete sample;
 
     clock_t end = clock();
     const int time = int(double(end - start) / CLOCKS_PER_SEC);
