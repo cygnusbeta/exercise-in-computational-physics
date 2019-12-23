@@ -1,46 +1,8 @@
 #include <iostream>
 #include <cmath>
-#include <random>
+#include "Sample.h"
 
 using namespace std;
-
-double get_random_0_to_1() {
-    // 乱数生成器
-    static mt19937_64 mt64(0);
-
-    // [0.0, 1.0) の一様分布実数生成器
-    uniform_real_distribution<double> get_rand_uni_real(0.0, 1.0);
-    // 乱数を生成
-    return get_rand_uni_real(mt64);
-}
-
-class Sample {
-private:
-    int d;
-
-public:
-    explicit Sample(int d);
-    ~Sample();
-
-    bool run();
-
-    double r2;
-};
-
-Sample::Sample(int d) {
-    this->d = d;
-    this->r2 = 0.0;
-}
-
-Sample::~Sample() = default;
-
-bool Sample::run() {
-    for (int j = 0; j < d; j++) {
-        double x_j = get_random_0_to_1();
-        r2 += pow(x_j, 2);
-    }
-    return r2 <= 1;
-}
 
 int main() {
     int n = int(pow(10, 5)), d = 14, count = 0, interval = pow(10, 4);

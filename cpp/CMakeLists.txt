@@ -4,4 +4,4 @@ project(cpp)
 set(CMAKE_CXX_STANDARD 14)
 
 #add_executable(cpp main.cp)
-add_executable(cpp sphere.cpp)
+add_executable(cpp sphere.cpp Sample.cpp Sample.h util.cpp util.h)
