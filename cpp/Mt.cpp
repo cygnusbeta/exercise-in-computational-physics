@@ -3,7 +3,7 @@
 
 using namespace std;
 
-util::util() {
+Mt::Mt() {
     // 乱数生成器
     mt64 = new mt19937_64(0);
 
@@ -11,9 +11,9 @@ util::util() {
     get_rand_uni_real = new uniform_real_distribution<double>(0.0, 1.0);
 }
 
-util::~util() = default;
+Mt::~Mt() = default;
 
-double util::get_random_0_to_1() {
+double Mt::get_random_0_to_1() {
     // 乱数を生成
     return (*get_rand_uni_real)(*mt64);
 }

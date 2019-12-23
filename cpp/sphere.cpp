@@ -12,7 +12,7 @@ int main() {
     double *r2s;
     r2s = new double[n];
     Sample *sample;
-    util mt;
+    Mt mt;
     for (int i = 0; i < n; i++) {
         sample = new Sample(d, mt);
         if (sample->run()) count++;

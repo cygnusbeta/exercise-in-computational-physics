@@ -1,11 +1,11 @@
-#include "util.h"
+#include "Mt.h"
 
 class Sample {
 private:
 
     int d;
     double x_j;
-    util mt;
+    Mt mt;
 
 public:
     ~Sample();
@@ -14,5 +14,5 @@ public:
 
     double r2;
 
-    Sample(int d, util mt);
+    Sample(int d, Mt mt);
 };

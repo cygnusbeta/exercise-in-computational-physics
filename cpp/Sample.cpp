@@ -1,7 +1,7 @@
 #include <cmath>
 #include "Sample.h"
 
-Sample::Sample(int d, util mt) {
+Sample::Sample(int d, Mt mt) {
     this->d = d;
     this->r2 = 0.0;
     this->mt = mt;
