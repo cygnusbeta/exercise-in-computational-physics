@@ -3,4 +3,4 @@ project(cpp)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(cpp sphere2d.cpp util.cpp util.h)
+add_executable(cpp sphere_multi.cpp Sample.cpp Sample.h util.cpp util.h)
