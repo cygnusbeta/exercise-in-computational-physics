@@ -25,7 +25,11 @@ inline bool Sample::run() {
         x_j_s[j] = x_j;
     }
     for (int j = 0; j < d; j++) {
-        r2 += pow(x_j_s[j], 2);
+        if (x_j_s[j] != 0.0) {
+            r2 += pow(x_j_s[j], 2);
+        } else {
+            r2 += pow(get_random_0_to_1(), 2);
+        }
         if (r2 > 1) return false;
     }
     return true;
