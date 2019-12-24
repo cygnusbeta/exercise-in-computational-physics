@@ -26,8 +26,8 @@ def main():
     plt.grid(True, which="both", axis='both', ls="--", color="g")
     plt.xlabel('x')
     plt.ylabel('y')
-    plt.savefig('plot.eps')
-    plt.savefig('plot.png')
+    plt.savefig('out/plot2d.eps')
+    plt.savefig('out/plot2d.png')
     plt.show()
 
 
