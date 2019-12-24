@@ -27,8 +27,8 @@ def loop(d: int):
     plt.grid(True, which="both", axis='both', ls="--", color="g")
     plt.xlabel('n')
     plt.ylabel('v')
-    plt.savefig('r2plot{}d.eps'.format(d))
-    plt.savefig('r2plot{}d.png'.format(d))
+    plt.savefig('out/r2plot{}d.eps'.format(d))
+    plt.savefig('out/r2plot{}d.png'.format(d))
     plt.show()
 
 
