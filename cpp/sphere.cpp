@@ -1,4 +1,4 @@
-#include <iostream>
+//#include <iostream>
 #include <cmath>
 #include "Sample.h"
 
@@ -7,8 +7,7 @@ using namespace std;
 inline int main_inline() {
     const int n = int(pow(10, 8)), d = 20, interval = int(pow(10, 7));
     int count = 0;
-    double *r2s;
-    r2s = new double[n];
+    double r2s[n];
     for (int i = 0; i < n; i++) {
         Sample sample(d);
         if (sample.run()) count++;

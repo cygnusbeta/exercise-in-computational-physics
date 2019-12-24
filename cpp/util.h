@@ -4,8 +4,6 @@
 
 using namespace std;
 
-double get_random_0_to_1();
-
 inline double get_random_0_to_1() {
     // 乱数生成器
     static mt19937_64 mt64(0);

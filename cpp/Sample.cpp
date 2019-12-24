@@ -1,6 +1,6 @@
-#include <cmath>
+//#include <cmath>
 #include "Sample.h"
-#include "util.h"
+//#include "util.h"
 
 Sample::Sample(int d) {
     this->d = d;
@@ -8,5 +8,3 @@ Sample::Sample(int d) {
 }
 
 Sample::~Sample() = default;
-
-
