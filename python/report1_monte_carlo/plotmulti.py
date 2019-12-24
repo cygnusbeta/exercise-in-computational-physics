@@ -19,8 +19,10 @@ def loop(d: int):
     v_minus_error = [e - error[i] for i, e in enumerate(v)]
 
     plt.plot(n, v, 'b', linestyle='solid')
-    plt.plot(n, v_plus_error, 'b', linestyle='solid')
-    plt.plot(n, v_minus_error, 'b', linestyle='solid')
+    # plt.plot(n, v_plus_error, 'b', linestyle='solid')
+    # plt.plot(n, v_minus_error, 'b', linestyle='solid')
+    plt.fill_between(n, v_plus_error, v, facecolor='lightblue')
+    plt.fill_between(n, v, v_minus_error, facecolor='lightblue')
 
     plt.axes().set_ylim(ymin=-max(v)*0.1, ymax=max(v_plus_error)*1.1)
     # plt.axes().set_aspect('equal', 'datalim')
