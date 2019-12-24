@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fstream>
 #include <random>
 
 using namespace std;
@@ -12,4 +13,12 @@ inline double get_random_0_to_1() {
     uniform_real_distribution<double> get_rand_uni_real(0.0, 1.0);
     // 乱数を生成
     return get_rand_uni_real(mt64);
+}
+
+inline int write_to_file(const string& s) {
+    ofstream f;
+    f.open("../out/x_y_plot_2d.csv");
+    f << s;
+    f.close();
+    return 0;
 }

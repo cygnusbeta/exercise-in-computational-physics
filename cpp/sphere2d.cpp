@@ -4,30 +4,13 @@
 #include <random>
 #include <fstream>
 #include <string>
+#include "util.h"
 
 using namespace std;
 
-double get_random_0_to_1() {
-    // 乱数生成器
-    static mt19937_64 mt64(0);
-
-    // [0.0, 1.0) の一様分布実数生成器
-    uniform_real_distribution<double> get_rand_uni_real(0.0, 1.0);
-    // 乱数を生成
-    return get_rand_uni_real(mt64);
-}
-
-int write_to_file(const string& s) {
-    ofstream f;
-    f.open("../out/x_y_plot_2d.csv");
-    f << s;
-    f.close();
-    return 0;
-}
-
 int main() {
     int n = int(pow(10, 5)), d = 2, count = 0, interval = pow(10, 4);
-    auto *r2s = new double[n];
+    double r2s[n];
     string s;
     for (int i = 0; i < n; i++) {
         double r2 = 0.0;
