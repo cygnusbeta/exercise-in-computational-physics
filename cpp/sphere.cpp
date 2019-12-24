@@ -4,9 +4,7 @@
 
 using namespace std;
 
-int main() {
-    clock_t start = clock();
-
+inline int main_inline() {
     const int n = int(pow(10, 8)), d = 20, interval = int(pow(10, 7));
     int count = 0;
     double *r2s;
@@ -24,6 +22,14 @@ int main() {
             printf("d = %d, i + 1 = %d, v = %f ± %f\n", d, i + 1, v, error);
         }
     }
+
+    return 0;
+}
+
+int main() {
+    clock_t start = clock();
+
+    main_inline();
 
     clock_t end = clock();
     const double time = double(end - start) / CLOCKS_PER_SEC;
