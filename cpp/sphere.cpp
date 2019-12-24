@@ -9,9 +9,8 @@ inline int main_inline() {
     int count = 0;
     double *r2s;
     r2s = new double[n];
-    double max_sum_x_j = sqrt(d);
     for (int i = 0; i < n; i++) {
-        Sample sample(d, max_sum_x_j);
+        Sample sample(d);
         if (sample.run()) count++;
 
         if (i % interval == interval - 1 or i == n - 1) {
