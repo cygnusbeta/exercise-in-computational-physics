@@ -9,8 +9,8 @@ int main() {
 
     const int n = int(pow(10, 8)), d = 20, interval = int(pow(10, 7));
     int count = 0;
-    float *r2s;
-    r2s = new float[n];
+    double *r2s;
+    r2s = new double[n];
     for (int i = 0; i < n; i++) {
         Sample sample(d);
         if (sample.run()) count++;
@@ -26,7 +26,7 @@ int main() {
     }
 
     clock_t end = clock();
-    const float time = float(end - start) / CLOCKS_PER_SEC;
+    const double time = double(end - start) / CLOCKS_PER_SEC;
     printf("Process finished. (%2.1f s)\n", time);
 
     return 0;
