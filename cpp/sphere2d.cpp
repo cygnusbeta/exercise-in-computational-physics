@@ -33,5 +33,5 @@ int main() {
             cout << "i + 1 = " << i + 1 << " v = " << v << " ± " << error << "\n";
         }
     }
-    write_to_file(s);
+    write_to_file(s, "../out/x_y_plot_2d.csv");
 }

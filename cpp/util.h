@@ -15,9 +15,9 @@ inline double get_random_0_to_1() {
     return get_rand_uni_real(mt64);
 }
 
-inline int write_to_file(const string& s) {
+inline int write_to_file(const string& s, const string& fpath) {
     ofstream f;
-    f.open("../out/x_y_plot_2d.csv");
+    f.open(fpath);
     f << s;
     f.close();
     return 0;
