@@ -4,9 +4,11 @@
 class Sample {
 private:
     int d;
+    double sum;
+    double max_sum_x_j;
 
 public:
-    explicit Sample(int d);
+    explicit Sample(int d, double max_sum_x_j);
     ~Sample();
 
     bool run();
@@ -15,9 +17,15 @@ public:
 };
 
 inline bool Sample::run() {
+    double x_j_s[d];
     for (int j = 0; j < d; j++) {
         double x_j = get_random_0_to_1();
-        r2 += pow(x_j, 2);
+        sum += x_j;
+        if (sum > max_sum_x_j) return false;
+        x_j_s[j] = x_j;
+    }
+    for (int j = 0; j < d; j++) {
+        r2 += pow(x_j_s[j], 2);
         if (r2 > 1) return false;
     }
     return true;
