@@ -7,6 +7,7 @@ using namespace std;
 inline int main_inline() {
     const int n_pow = 8, n = int(pow(10, n_pow)), num_plot = 100, interval = n / num_plot;
     const int d_max = 20;
+    string v_s;
 
     for (int d = 2; d <= d_max; d++) {
         double v_theory = pow(M_PI, double(d) / 2.0) / tgamma(double(d) / 2.0 + 1.0);
@@ -29,11 +30,17 @@ inline int main_inline() {
                 s += to_string(i + 1) + "," + to_string(v) + "," + to_string(error) + "," +
                         to_string(v_theory) + "\n";
                 i_log++;
+                if (i == n - 1) {
+                    v_s += to_string(d) + "," + to_string(v) + "," + to_string(error) + "\n";
+                }
             }
         }
         string fpath = "../out/r2_plot_" + to_string(d) + "d.csv";
         write_to_file(s, fpath);
     }
+
+    string v_s_path = "../out/v_s_plot.csv";
+    write_to_file(v_s, v_s_path);
 
     return 0;
 }
