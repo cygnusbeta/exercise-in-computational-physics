@@ -9,6 +9,8 @@ inline int main_inline() {
     const int d_max = 20;
 
     for (int d = 2; d <= d_max; d++) {
+        double v_theory = pow(M_PI, double(d) / 2.0) / tgamma(double(d) / 2.0 + 1.0);
+
         int i_log = 0, count = 0;
         double r2s[n];
         string s;
@@ -24,7 +26,8 @@ inline int main_inline() {
                 double q = 1.0 - p;
                 double error = 1.96 * pow(2, d) * sqrt(p * q / double(i + 1));
                 printf("d = %d, i + 1 = %d, v = %f ± %f\n", d, i + 1, v, error);
-                s += to_string(i + 1) + "," + to_string(v) + "," + to_string(error) + "\n";
+                s += to_string(i + 1) + "," + to_string(v) + "," + to_string(error) + "," +
+                        to_string(v_theory) + "\n";
                 i_log++;
             }
         }
