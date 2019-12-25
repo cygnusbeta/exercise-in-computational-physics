@@ -25,6 +25,7 @@ def loop(d: int):
     plt.fill_between(n, v, v_minus_error, facecolor='lightblue')
 
     plt.axes().set_ylim(ymin=-max(v)*0.1, ymax=max(v_plus_error)*1.1)
+    plt.xscale('log')
     # plt.axes().set_aspect('equal', 'datalim')
     plt.grid(True, which="both", axis='both', ls="--", color="g")
     plt.xlabel('n')
