@@ -1,8 +1,17 @@
 //#include <iostream>
 #include <cmath>
+#include <tuple>
 #include "Sample.h"
 
 using namespace std;
+
+inline tuple<double, double, double, double> calc(int d, int i, int count) {
+    double v = double(count) / double(i + 1) * pow(2, d);
+    double p = double(count) / double(i + 1);
+    double q = 1.0 - p;
+    double error = 1.96 * pow(2, d) * sqrt(p * q / double(i + 1));
+    return forward_as_tuple(v, p, q, error);
+}
 
 inline int main_inline() {
     const int n_pow = 8, n = int(pow(10, n_pow)), num_plot = 100, interval = n / num_plot;
@@ -22,17 +31,17 @@ inline int main_inline() {
             double log10_i = log10(i + 1);
             if (log10_i >= double(n_pow) / double(num_plot) * double(i_log) or i == n - 1) {
                 r2s[i] = sample.r2;
-                double v = double(count) / double(i + 1) * pow(2, d);
-                double p = double(count) / double(i + 1);
-                double q = 1.0 - p;
-                double error = 1.96 * pow(2, d) * sqrt(p * q / double(i + 1));
+                double v, p, q, error;
+                tie(v, p, q, error) = calc(d, i, count);
                 printf("d = %d, i + 1 = %d, v = %f ± %f\n", d, i + 1, v, error);
                 s += to_string(i + 1) + "," + to_string(v) + "," + to_string(error) + "," +
                         to_string(v_theory) + "\n";
                 i_log++;
-                if (i == n - 1) {
-                    v_s += to_string(d) + "," + to_string(v) + "," + to_string(error) + "\n";
-                }
+            }
+            if (i + 1 == int(pow(10, 8))) {
+                double v, error;
+                tie(v, ignore, ignore, error) = calc(d, i, count);
+                v_s += to_string(d) + "," + to_string(v) + "," + to_string(error) + "\n";
             }
         }
         string fpath = "../out/r2_plot_" + to_string(d) + "d.csv";
