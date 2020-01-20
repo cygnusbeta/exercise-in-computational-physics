@@ -1,6 +1,6 @@
 #include <cstdio>
 #include <string>
-#include "../util.h"
+#include "../../util.h"
 
 using namespace std;
 
@@ -15,7 +15,7 @@ int main() {
         v += (-x_tmp - 2 * gamma * v) * dt;
         s += to_string(t) + " " + to_string(x) + "\n";
     }
-    string fpath = "../out/oscil7_4.dat";
+    string fpath = "../../out/euler/oscil7_4.dat";
     write_to_file(s, fpath);
 
 //    gnuplot で

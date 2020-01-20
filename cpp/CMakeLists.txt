@@ -3,4 +3,4 @@ project(cpp)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(cpp numeric_calculation/n.cpp)
+add_executable(cpp numeric_calculation/euler/fall1.cpp)

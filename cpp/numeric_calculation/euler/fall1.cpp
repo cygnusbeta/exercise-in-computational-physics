@@ -1,6 +1,6 @@
 #include <cstdio>
 #include <string>
-#include "../util.h"
+#include "../../util.h"
 
 using namespace std;
 
@@ -15,7 +15,7 @@ int main() {
         v += g * dt;
         s += to_string(t) + " " + to_string(x) + "\n";
     }
-    string fpath = "../out/fall.dat";
+    string fpath = "../../out/euler/fall.dat";
     write_to_file(s, fpath);
 
     return 0;

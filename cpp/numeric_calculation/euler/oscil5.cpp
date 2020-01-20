@@ -1,6 +1,6 @@
 #include <cstdio>
 #include <string>
-#include "../util.h"
+#include "../../util.h"
 
 using namespace std;
 
@@ -13,9 +13,10 @@ int main() {
         double x_tmp = x;
         x += v * dt;
         v += -x_tmp * dt;
-        s += to_string(t) + " " + to_string(x) + "\n";
+        double diff = (x - cos(t)) / cos(t);
+        s += to_string(t) + " " + to_string(diff) + "\n";
     }
-    string fpath = "../out/oscil4.dat";
+    string fpath = "../../out/euler/oscil5.dat";
     write_to_file(s, fpath);
 
     return 0;
