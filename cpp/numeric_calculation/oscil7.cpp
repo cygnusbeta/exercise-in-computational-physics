@@ -18,5 +18,9 @@ int main() {
     string fpath = "../out/oscil7_4.dat";
     write_to_file(s, fpath);
 
+//    gnuplot で
+//    ```set size ratio -1
+//       plot "oscil7_1.dat", "oscil7_2.dat", "oscil7_3.dat", "oscil7_4.dat"```
+//    でプロット
     return 0;
 }
