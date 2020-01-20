@@ -24,7 +24,7 @@ int main() {
 
 //    gnuplot で
 //    ```set size ratio -1
-//       plot 'n.dat'```
+//       plot 'n.dat' with points pointtype 0```
 //    でプロット
     return 0;
 }
