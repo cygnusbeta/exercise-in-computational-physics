@@ -18,7 +18,7 @@ int main() {
         v_z +=  -beta * v_z * dt;
         s += to_string(x) + " " + to_string(z) + "\n";
     }
-    string fpath = "../../out/euler/fall3.dat";
+    string fpath = "../out/euler/fall3.dat";
     write_to_file(s, fpath);
 
     return 0;

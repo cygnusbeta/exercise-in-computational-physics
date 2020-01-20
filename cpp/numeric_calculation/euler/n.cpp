@@ -19,7 +19,7 @@ int main() {
     for (int i = 0; i < n; i++) {
         s += to_string(x[i]) + " " + to_string(y[i]) + "\n";
     }
-    string fpath = "../../out/euler/n.dat";
+    string fpath = "../out/euler/n.dat";
     write_to_file(s, fpath);
 
 //    gnuplot で

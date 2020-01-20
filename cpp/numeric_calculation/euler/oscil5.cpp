@@ -16,7 +16,7 @@ int main() {
         double diff = (x - cos(t)) / cos(t);
         s += to_string(t) + " " + to_string(diff) + "\n";
     }
-    string fpath = "../../out/euler/oscil5.dat";
+    string fpath = "../out/euler/oscil5.dat";
     write_to_file(s, fpath);
 
     return 0;

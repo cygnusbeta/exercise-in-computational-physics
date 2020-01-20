@@ -15,7 +15,7 @@ int main() {
         v += -x_tmp * dt;
         s += to_string(t) + " " + to_string(x) + "\n";
     }
-    string fpath = "../../out/euler/oscil4.dat";
+    string fpath = "../out/euler/oscil4.dat";
     write_to_file(s, fpath);
 
     return 0;
