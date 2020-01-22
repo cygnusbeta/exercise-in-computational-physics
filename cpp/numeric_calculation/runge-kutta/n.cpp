@@ -33,27 +33,27 @@ int main() {
     t[0] = 0.0, x[0] = 0.5, y[0] = 0.0, v_x[0] = 0.0, v_y[0] = 1.63;
 
     for (int i = 0; i < n - 1; i++) {
-        double k0 = dt * f_dx_dt(t[i], x[i], y[i], v_x[i], v_y[i]);
-        double l0 = dt * g_dy_dt(t[i], x[i], y[i], v_x[i], v_y[i]);
-        double m0 = dt * h_dv_x_dt(t[i], x[i], y[i], v_x[i], v_y[i]);
-        double n0 = dt * i_dv_y_dt(t[i], x[i], y[i], v_x[i], v_y[i]);
-        double k1 = dt * f_dx_dt(t[i] + dt / 2, x[i] + k0 / 2, y[i] + l0 / 2, v_x[i] + m0 / 2, v_y[i] + n0 / 2);
-        double l1 = dt * g_dy_dt(t[i] + dt / 2, x[i] + k0 / 2, y[i] + l0 / 2, v_x[i] + m0 / 2, v_y[i] + n0 / 2);
-        double m1 = dt * h_dv_x_dt(t[i] + dt / 2, x[i] + k0 / 2, y[i] + l0 / 2, v_x[i] + m0 / 2, v_y[i] + n0 / 2);
-        double n1 = dt * i_dv_y_dt(t[i] + dt / 2, x[i] + k0 / 2, y[i] + l0 / 2, v_x[i] + m0 / 2, v_y[i] + n0 / 2);
-        double k2 = dt * f_dx_dt(t[i] + dt / 2, x[i] + k1 / 2, y[i] + l1 / 2, v_x[i] + m1 / 2, v_y[i] + n1 / 2);
-        double l2 = dt * g_dy_dt(t[i] + dt / 2, x[i] + k1 / 2, y[i] + l1 / 2, v_x[i] + m1 / 2, v_y[i] + n1 / 2);
-        double m2 = dt * h_dv_x_dt(t[i] + dt / 2, x[i] + k1 / 2, y[i] + l1 / 2, v_x[i] + m1 / 2, v_y[i] + n1 / 2);
-        double n2 = dt * i_dv_y_dt(t[i] + dt / 2, x[i] + k1 / 2, y[i] + l1 / 2, v_x[i] + m1 / 2, v_y[i] + n1 / 2);
-        double k3 = dt * f_dx_dt(t[i] + dt, x[i] + k2, y[i] + l2, v_x[i] + m2, v_y[i] + n2);
-        double l3 = dt * g_dy_dt(t[i] + dt, x[i] + k2, y[i] + l2, v_x[i] + m2, v_y[i] + n2);
-        double m3 = dt * h_dv_x_dt(t[i] + dt, x[i] + k2, y[i] + l2, v_x[i] + m2, v_y[i] + n2);
-        double n3 = dt * i_dv_y_dt(t[i] + dt, x[i] + k2, y[i] + l2, v_x[i] + m2, v_y[i] + n2);
+        double k0 = f_dx_dt(t[i], x[i], y[i], v_x[i], v_y[i]);
+        double l0 = g_dy_dt(t[i], x[i], y[i], v_x[i], v_y[i]);
+        double m0 = h_dv_x_dt(t[i], x[i], y[i], v_x[i], v_y[i]);
+        double n0 = i_dv_y_dt(t[i], x[i], y[i], v_x[i], v_y[i]);
+        double k1 = f_dx_dt(t[i] + dt / 2, x[i] + dt / 2 * k0, y[i] + dt / 2 * l0, v_x[i] + dt / 2 * m0, v_y[i] + dt / 2 * n0);
+        double l1 = g_dy_dt(t[i] + dt / 2, x[i] + dt / 2 * k0, y[i] + dt / 2 * l0, v_x[i] + dt / 2 * m0, v_y[i] + dt / 2 * n0);
+        double m1 = h_dv_x_dt(t[i] + dt / 2, x[i] + dt / 2 * k0, y[i] + dt / 2 * l0, v_x[i] + dt / 2 * m0, v_y[i] + dt / 2 * n0);
+        double n1 = i_dv_y_dt(t[i] + dt / 2, x[i] + dt / 2 * k0, y[i] + dt / 2 * l0, v_x[i] + dt / 2 * m0, v_y[i] + dt / 2 * n0);
+        double k2 = f_dx_dt(t[i] + dt / 2, x[i] + dt / 2 * k1, y[i] + dt / 2 * l1, v_x[i] + dt / 2 * m1, v_y[i] + dt / 2 * n1);
+        double l2 = g_dy_dt(t[i] + dt / 2, x[i] + dt / 2 * k1, y[i] + dt / 2 * l1, v_x[i] + dt / 2 * m1, v_y[i] + dt / 2 * n1);
+        double m2 = h_dv_x_dt(t[i] + dt / 2, x[i] + dt / 2 * k1, y[i] + dt / 2 * l1, v_x[i] + dt / 2 * m1, v_y[i] + dt / 2 * n1);
+        double n2 = i_dv_y_dt(t[i] + dt / 2, x[i] + dt / 2 * k1, y[i] + dt / 2 * l1, v_x[i] + dt / 2 * m1, v_y[i] + dt / 2 * n1);
+        double k3 = f_dx_dt(t[i] + dt, x[i] + dt * k2, y[i] + dt * l2, v_x[i] + dt * m2, v_y[i] + dt * n2);
+        double l3 = g_dy_dt(t[i] + dt, x[i] + dt * k2, y[i] + dt * l2, v_x[i] + dt * m2, v_y[i] + dt * n2);
+        double m3 = h_dv_x_dt(t[i] + dt, x[i] + dt * k2, y[i] + dt * l2, v_x[i] + dt * m2, v_y[i] + dt * n2);
+        double n3 = i_dv_y_dt(t[i] + dt, x[i] + dt * k2, y[i] + dt * l2, v_x[i] + dt * m2, v_y[i] + dt * n2);
         t[i + 1] = t[i] + dt;
-        x[i + 1] = x[i] + (k0 + 2 * k1 + 2 * k2 + k3) / 6;
-        y[i + 1] = y[i] + (l0 + 2 * l1 + 2 * l2 + l3) / 6;
-        v_x[i + 1] = v_x[i] + (m0 + 2 * m1 + 2 * m2 + m3) / 6;
-        v_y[i + 1] = v_y[i] + (n0 + 2 * n1 + 2 * n2 + n3) / 6;
+        x[i + 1] = x[i] + (dt / 6) * (k0 + 2 * k1 + 2 * k2 + k3);
+        y[i + 1] = y[i] + (dt / 6) * (l0 + 2 * l1 + 2 * l2 + l3);
+        v_x[i + 1] = v_x[i] + (dt / 6) * (m0 + 2 * m1 + 2 * m2 + m3);
+        v_y[i + 1] = v_y[i] + (dt / 6) * (n0 + 2 * n1 + 2 * n2 + n3);
     }
     string s;
     for (int i = 0; i < n; i++) {
