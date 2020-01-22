@@ -246,51 +246,53 @@ Euler法と違いLeapfrog法はエネルギーを保存するので、円の半�
 
 \subsection{計算方法}
 運動方程式
-\begin{eqnarray}
+\begin{align}
   m\frac{\mathrm{d}^2 x}{\mathrm{d}t^2}=-\frac{GMmx}{r^3}\\
   m\frac{\mathrm{d}^2 y}{\mathrm{d}t^2}=-\frac{GMmy}{r^3}
-\end{eqnarray}
-は次のような$x$、$y$、$v_x$、$v_y$についての連立常微分方程式で書ける。
-\begin{eqnarray}
-  \frac{\mathrm{d}x}{\mathrm{d}t}&=&v_x\\
-  \frac{\mathrm{d}y}{\mathrm{d}t}&=&v_y\\
-  \frac{\mathrm{d}v_x}{\mathrm{d}t}&=&-\frac{GMmx}{mr^3}\\
-  \frac{\mathrm{d}v_y}{\mathrm{d}t}&=&-\frac{GMmy}{mr^3}
-\end{eqnarray}
-ここで、各方程式の右辺をそれぞれ
-\begin{eqnarray}
-  \frac{\mathrm{d}x}{\mathrm{d}t}&=&f\left(t,x,y,v_x,v_y\right)\\
-  \frac{\mathrm{d}y}{\mathrm{d}t}&=&g\left(t,x,y,v_x,v_y\right)\\
-  \frac{\mathrm{d}v_x}{\mathrm{d}t}&=&h\left(t,x,y,v_x,v_y\right)\\
-  \frac{\mathrm{d}v_y}{\mathrm{d}t}&=&i\left(t,x,y,v_x,v_y\right)
-\end{eqnarray}
-と置くと、$t_{i+1}$、$x_{i+1}$、$y_{i+1}$、$v_{x_{i+1}}$、$v_{y_{i+1}}$は$t_{i}$、$x_{i}$、$y_{i}$、$v_{x_{i}}$、$v_{y_{i}}$を使って次のように求められる。
-\begin{eqnarray}
-  t_{i+1}&=&t_{i}+\mathrm{d}t\\
-  x_{i+1}&=&x_{i}+\frac{\mathrm{d}t}{6}\left(k_0+2k_1+2k_2+k_3\right)\\
-  y_{i+1}&=&y_{i}+\frac{\mathrm{d}t}{6}\left(l_0+2l_1+2l_2+l_3\right)\\
-  v_{x_{i+1}}&=&v_{x_{i}}+\frac{\mathrm{d}t}{6}\left(m_0+2m_1+2m_2+m_3\right)\\
-  v_{y_{i+1}}&=&v_{y_{i}}+\frac{\mathrm{d}t}{6}\left(n_0+2n_1+2n_2+n_3\right)
-\end{eqnarray}
-ただし、
-\begin{align}
-  k_0&=&f\left(t_i,x_i,y_i,v_{x_{i}},v_{y_{i}}\right)\\
-  l_0&=&g\left(t_i,x_i,y_i,v_{x_{i}},v_{y_{i}}\right)\\
-  m_0&=&h\left(t_i,x_i,y_i,v_{x_{i}},v_{y_{i}}\right)\\
-  n_0&=&i\left(t_i,x_i,y_i,v_{x_{i}},v_{y_{i}}\right)\\
-  k_1&=&f\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_0}{2},y_i+\frac{\mathrm{d}tl_0}{2},v_{x_{i}}+\frac{\mathrm{d}tm_0}{2},v_{y_{i}}+\frac{\mathrm{d}tn_0}{2}\right)\\
-  l_1&=&g\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_0}{2},y_i+\frac{\mathrm{d}tl_0}{2},v_{x_{i}}+\frac{\mathrm{d}tm_0}{2},v_{y_{i}}+\frac{\mathrm{d}tn_0}{2}\right)\\
-  m_1&=&h\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_0}{2},y_i+\frac{\mathrm{d}tl_0}{2},v_{x_{i}}+\frac{\mathrm{d}tm_0}{2},v_{y_{i}}+\frac{\mathrm{d}tn_0}{2}\right)\\
-  n_1&=&i\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_0}{2},y_i+\frac{\mathrm{d}tl_0}{2},v_{x_{i}}+\frac{\mathrm{d}tm_0}{2},v_{y_{i}}+\frac{\mathrm{d}tn_0}{2}\right)\\
-  k_2&=&f\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_1}{2},y_i+\frac{\mathrm{d}tl_1}{2},v_{x_{i}}+\frac{\mathrm{d}tm_1}{2},v_{y_{i}}+\frac{\mathrm{d}tn_1}{2}\right)\\
-  l_2&=&g\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_1}{2},y_i+\frac{\mathrm{d}tl_1}{2},v_{x_{i}}+\frac{\mathrm{d}tm_1}{2},v_{y_{i}}+\frac{\mathrm{d}tn_1}{2}\right)\\
-  m_2&=&h\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_1}{2},y_i+\frac{\mathrm{d}tl_1}{2},v_{x_{i}}+\frac{\mathrm{d}tm_1}{2},v_{y_{i}}+\frac{\mathrm{d}tn_1}{2}\right)\\
-  n_2&=&i\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_1}{2},y_i+\frac{\mathrm{d}tl_1}{2},v_{x_{i}}+\frac{\mathrm{d}tm_1}{2},v_{y_{i}}+\frac{\mathrm{d}tn_1}{2}\right)\\
-  k_3&=&f\left(t_i+\mathrm{d}t,x_i+\mathrm{d}tk_2,y_i+\mathrm{d}tl_2,v_{x_{i}}+\mathrm{d}tm_2,v_{y_{i}}+\mathrm{d}tn_2\right)\\
-  l_3&=&g\left(t_i+\mathrm{d}t,x_i+\mathrm{d}tk_2,y_i+\mathrm{d}tl_2,v_{x_{i}}+\mathrm{d}tm_2,v_{y_{i}}+\mathrm{d}tn_2\right)\\
-  m_3&=&h\left(t_i+\mathrm{d}t,x_i+\mathrm{d}tk_2,y_i+\mathrm{d}tl_2,v_{x_{i}}+\mathrm{d}tm_2,v_{y_{i}}+\mathrm{d}tn_2\right)\\
-  n_3&=&i\left(t_i+\mathrm{d}t,x_i+\mathrm{d}tk_2,y_i+\mathrm{d}tl_2,v_{x_{i}}+\mathrm{d}tm_2,v_{y_{i}}+\mathrm{d}tn_2\right)
 \end{align}
+は次のような$x$、$y$、$v_x$、$v_y$についての連立常微分方程式で書ける。
+\begin{align}
+  \frac{\mathrm{d}x}{\mathrm{d}t}&=v_x&\\
+  \frac{\mathrm{d}y}{\mathrm{d}t}&=v_y&\\
+  \frac{\mathrm{d}v_x}{\mathrm{d}t}&=-\frac{GMmx}{mr^3}&\\
+  \frac{\mathrm{d}v_y}{\mathrm{d}t}&=-\frac{GMmy}{mr^3}&
+\end{align}
+ここで、各方程式の右辺をそれぞれ
+\begin{align}
+  \frac{\mathrm{d}x}{\mathrm{d}t}&=f\left(t,x,y,v_x,v_y\right)&\\
+  \frac{\mathrm{d}y}{\mathrm{d}t}&=g\left(t,x,y,v_x,v_y\right)&\\
+  \frac{\mathrm{d}v_x}{\mathrm{d}t}&=h\left(t,x,y,v_x,v_y\right)&\\
+  \frac{\mathrm{d}v_y}{\mathrm{d}t}&=i\left(t,x,y,v_x,v_y\right)&
+\end{align}
+と置くと、$t_{i+1}$、$x_{i+1}$、$y_{i+1}$、$v_{x_{i+1}}$、$v_{y_{i+1}}$は$t_{i}$、$x_{i}$、$y_{i}$、$v_{x_{i}}$、$v_{y_{i}}$を使って次のように求められる。
+\begin{align}
+  t_{i+1}&=t_{i}+\mathrm{d}t&\\
+  x_{i+1}&=x_{i}+\frac{\mathrm{d}t}{6}\left(k_0+2k_1+2k_2+k_3\right)&\\
+  y_{i+1}&=y_{i}+\frac{\mathrm{d}t}{6}\left(l_0+2l_1+2l_2+l_3\right)&\\
+  v_{x_{i+1}}&=v_{x_{i}}+\frac{\mathrm{d}t}{6}\left(m_0+2m_1+2m_2+m_3\right)&\\
+  v_{y_{i+1}}&=v_{y_{i}}+\frac{\mathrm{d}t}{6}\left(n_0+2n_1+2n_2+n_3\right)&
+\end{align}
+ただし、
+\footnotesize
+\begin{align}
+  k_0&=f\left(t_i,x_i,y_i,v_{x_{i}},v_{y_{i}}\right)&\\
+  l_0&=g\left(t_i,x_i,y_i,v_{x_{i}},v_{y_{i}}\right)&\\
+  m_0&=h\left(t_i,x_i,y_i,v_{x_{i}},v_{y_{i}}\right)&\\
+  n_0&=i\left(t_i,x_i,y_i,v_{x_{i}},v_{y_{i}}\right)&\\
+  k_1&=f\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_0}{2},y_i+\frac{\mathrm{d}tl_0}{2},v_{x_{i}}+\frac{\mathrm{d}tm_0}{2},v_{y_{i}}+\frac{\mathrm{d}tn_0}{2}\right)&\\
+  l_1&=g\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_0}{2},y_i+\frac{\mathrm{d}tl_0}{2},v_{x_{i}}+\frac{\mathrm{d}tm_0}{2},v_{y_{i}}+\frac{\mathrm{d}tn_0}{2}\right)&\\
+  m_1&=h\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_0}{2},y_i+\frac{\mathrm{d}tl_0}{2},v_{x_{i}}+\frac{\mathrm{d}tm_0}{2},v_{y_{i}}+\frac{\mathrm{d}tn_0}{2}\right)&\\
+  n_1&=i\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_0}{2},y_i+\frac{\mathrm{d}tl_0}{2},v_{x_{i}}+\frac{\mathrm{d}tm_0}{2},v_{y_{i}}+\frac{\mathrm{d}tn_0}{2}\right)&\\
+  k_2&=f\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_1}{2},y_i+\frac{\mathrm{d}tl_1}{2},v_{x_{i}}+\frac{\mathrm{d}tm_1}{2},v_{y_{i}}+\frac{\mathrm{d}tn_1}{2}\right)&\\
+  l_2&=g\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_1}{2},y_i+\frac{\mathrm{d}tl_1}{2},v_{x_{i}}+\frac{\mathrm{d}tm_1}{2},v_{y_{i}}+\frac{\mathrm{d}tn_1}{2}\right)&\\
+  m_2&=h\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_1}{2},y_i+\frac{\mathrm{d}tl_1}{2},v_{x_{i}}+\frac{\mathrm{d}tm_1}{2},v_{y_{i}}+\frac{\mathrm{d}tn_1}{2}\right)&\\
+  n_2&=i\left(t_i+\frac{\mathrm{d}t}{2},x_i+\frac{\mathrm{d}tk_1}{2},y_i+\frac{\mathrm{d}tl_1}{2},v_{x_{i}}+\frac{\mathrm{d}tm_1}{2},v_{y_{i}}+\frac{\mathrm{d}tn_1}{2}\right)&\\
+  k_3&=f\left(t_i+\mathrm{d}t,x_i+\mathrm{d}tk_2,y_i+\mathrm{d}tl_2,v_{x_{i}}+\mathrm{d}tm_2,v_{y_{i}}+\mathrm{d}tn_2\right)&\\
+  l_3&=g\left(t_i+\mathrm{d}t,x_i+\mathrm{d}tk_2,y_i+\mathrm{d}tl_2,v_{x_{i}}+\mathrm{d}tm_2,v_{y_{i}}+\mathrm{d}tn_2\right)&\\
+  m_3&=h\left(t_i+\mathrm{d}t,x_i+\mathrm{d}tk_2,y_i+\mathrm{d}tl_2,v_{x_{i}}+\mathrm{d}tm_2,v_{y_{i}}+\mathrm{d}tn_2\right)&\\
+  n_3&=i\left(t_i+\mathrm{d}t,x_i+\mathrm{d}tk_2,y_i+\mathrm{d}tl_2,v_{x_{i}}+\mathrm{d}tm_2,v_{y_{i}}+\mathrm{d}tn_2\right)&
+\end{align}
+\normalsize
 である。
 
 \subsection{ソースコード}
