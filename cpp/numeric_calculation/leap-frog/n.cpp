@@ -7,7 +7,7 @@ int main() {
     const int tmax = 100;
     const int n = 1000;
     const double dt = double(tmax) / double(n), G = 1.0, M = 1.0, m = 1.0;
-    double x[2 * n], y[2 * n], v_x[2 * n], v_y[2 * n];
+    double x[2 * n], y[2 * n], v_x[2 * (n + 1)], v_y[2 * (n + 1)];
     x[0] = 0.5, y[0] = 0.0, v_x[0] = 0.0, v_y[0] = 1.63;
 
     double r = sqrt(pow(x[0], 2) + pow(y[0], 2));
