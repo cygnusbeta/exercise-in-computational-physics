@@ -3,9 +3,12 @@
 
 using namespace std;
 
-const int tmax = 100;
-const int n = 1000;
-const double dt = double(tmax) / double(n), G = 1.0, M = 1.0, m = 1.0;
+#define tmax 100
+#define n 1000
+#define dt double(tmax) / double(n)
+#define G 1.0
+#define M 1.0
+#define m 1.0
 
 double f_dx_dt(double t, double _x, double _y, double _v_x, double _v_y) {
     return _v_x;
