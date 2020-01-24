@@ -63,6 +63,12 @@
 \subsection{内容}
 2体問題の数値計算を Euler 法で行った。
 
+また、力学的エネルギーもプロットを行った。力学的エネルギーは
+\begin{align}
+  E(t)=\frac{1}{2}mv(t)^2-\frac{GMm}{r(t)}
+\end{align}
+で表される。これの理論値（$t=0$での値）と各時間での値を比較した。
+
 \subsection{ソースコード}
 euler/n.cpp
 % \begin{lstlisting}[caption=hoge,label=fuga]
@@ -172,8 +178,18 @@ $\mathrm{d}t$をもう少し小さくしたとき($\mathrm{d}t=0.01$で時刻は
 \caption{$\mathrm{d}t=0.01, \mathrm{n}=20000$とした場合}
 \end{figure}
 
+\begin{figure}[H]
+力学的エネルギーの時間変化
+\begin{center}
+\includegraphics[width=8cm]{../cpp/out/euler/n_energy.png}
+\end{center}
+\caption{力学的エネルギーの時間変化(t=200まで)}
+\end{figure}
+
 \subsection{考察}
 徐々に半径が変わっているが、これはEuler法がエネルギーを保存しないためと考えられる。また、$\mathrm{d}t$を小さくすればより精度が高くなっているが、これは$\frac{\Delta x}{\Delta t}$を小さくすればより$\displaystyle \frac{\mathrm{d}x}{\mathrm{d}t}=\lim_{\Delta t \to 0}\frac{\Delta x}{\Delta t}$に近づくためと考えられる。
+
+また、力学的エネルギーは常に一定の値をとる理論値と比べて、計算した値は増加している。これは、Euler法がエネルギーを保存しないためと考えられる。
 
 \section{Leapfrog法}
 \subsection{内容}
@@ -237,8 +253,27 @@ $\mathrm{d}t$は$0.1$のまま、nをもう少し大きくしたとき（5000秒
 \caption{$\mathrm{d}t=0.1, \mathrm{n}=50000, v_y=1.63$とした場合}
 \end{figure}
 
+\begin{figure}[H]
+力学的エネルギーの時間変化
+\begin{center}
+\includegraphics[width=8cm]{../cpp/out/leap-frog/n_energy_theory.png}
+\end{center}
+\caption{力学的エネルギーの時間変化(t=100まで)}
+\end{figure}
+
 \subsection{考察}
 Euler法と違いLeapfrog法はエネルギーを保存するので、円の半径はほぼ一定に保たれているように見える。
+
+実際、力学的エネルギーの理論値と計算結果との誤差をプロットしてみると、
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=8cm]{../cpp/out/leap-frog/n_error.png}
+\end{center}
+\caption{力学的エネルギーの誤差（理論値と計算結果の差）}
+\end{figure}
+
+と、誤差は一定の範囲内に保たれ、時間変化に渡って蓄積していかないことがわかる。これはLeapfrog法の持つシンプレクティック性による。
 
 \section{古典4次 Runge-Kutta 法}
 \subsection{内容}
@@ -389,10 +424,29 @@ $\mathrm{d}t$は$0.1$のまま、nをもう少し大きくしたとき（5000秒
 \caption{$\mathrm{d}t=0.1, \mathrm{n}=50000, v_y=1.63$とした場合}
 \end{figure}
 
+\begin{figure}[H]
+力学的エネルギーの時間変化(t=100まで)）
+\begin{center}
+\includegraphics[width=8cm]{../cpp/out/runge-kutta/n_energy.png}
+\end{center}
+\caption{力学的エネルギーの時間変化(t=100まで)}
+\end{figure}
+
 \subsection{考察}
 古典4次 Runkge-Kutta 法は4次精度なので、Euler 法や Leapfrog 法に比べ同じ$\mathrm{d}t=0.1$でもかなり精度がよくなっており、軌道がほとんどずれていない。
 
 ただし、5000秒先まで追うとどんどん軌道半径が小さくなってしまった。これは、ただ軌道半径がほぼ一定に保たれて位置がずれるだけのLeapfrog 法とは違って、古典4次 Runkge-Kutta 法がエネルギーを保存しないためと思われる。
+
+実際、誤差（力学的エネルギーの理論値と計算した値の差）は
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=8cm]{../cpp/out/runge-kutta/n_error.png}
+\end{center}
+\caption{力学的エネルギーの誤差（理論値と計算結果の差）}
+\end{figure}
+
+と、時間変化すると増加していくのがわかる。
 
 \begin{thebibliography}{99}
 \bibitem{sit}
