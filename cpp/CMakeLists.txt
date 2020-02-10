@@ -3,4 +3,4 @@ project(cpp)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(cpp numeric_calculation/runge-kutta/n.cpp)
+add_executable(cpp dice_game/dice.cpp)
