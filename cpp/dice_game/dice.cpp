@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    const int nPeople = 1000, nChip = 10000, numExchange = 1000000;
+    const int nPeople = 100000, nChip = 10000000, numExchange = 1000000000;
     int numsChip[nPeople] = {};
 
 //    distribute
