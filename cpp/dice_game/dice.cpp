@@ -13,28 +13,14 @@ int main() {
         int giveTo = get_random_0_to_n(nPeople);
         numsChip[giveTo] += 1;
     }
-
-//    count chips
-    int histogram[nChip] = {};
+    string s1;
     for (int i = 0; i < nPeople; i++) {
-        int numChip = numsChip[i];
-        histogram[numChip] += 1;
+        s1 += to_string(numsChip[i]) + "\n";
     }
-    int maxChip = 0;
-    for (int i = nChip - 1; i >= 0; i--) {
-        if (histogram[i] >= 1) {
-            maxChip = i;
-            break;
-        }
-    }
-
-    string s;
-    for (int i = 0; i < maxChip + 1; i++) {
-        s += to_string(i) + " " + to_string(histogram[i]) + "\n";
-    }
-
-    string fpath1 = "../out/dice_game/dice1.dat";
-    write_to_file(s, fpath1);
+    string fpath1 = "../out/dice_game/data1.dat";
+    write_to_file(s1, fpath1);
+//    filter(x,y)=int(x/y)*y; plot "data1.dat" u (filter($1,0.001)):(1) smooth frequency with boxes
+//    でプロット
 
 //    exchange
     for (int i = 0; i < numExchange; i++) {
@@ -46,30 +32,13 @@ int main() {
         numsChip[giveFrom] -= 1;
         numsChip[giveTo] += 1;
     }
-
-//    count chips
-    int histogram2[nChip] = {};
-    for (int i = 0; i < nPeople; i++) {
-        int numChip = numsChip[i];
-        histogram2[numChip] += 1;
-    }
-    int maxChip2 = 0;
-    for (int i = nChip - 1; i >= 0; i--) {
-        if (histogram2[i] >= 1) {
-            maxChip2 = i;
-            break;
-        }
-    }
-
     string s2;
-    for (int i = 0; i < maxChip2 + 1; i++) {
-        s2 += to_string(i) + " " + to_string(histogram2[i]) + "\n";
+    for (int i = 0; i < nPeople; i++) {
+        s2 += to_string(numsChip[i]) + "\n";
     }
-
-    string fpath2 = "../out/dice_game/dice2.dat";
+    string fpath2 = "../out/dice_game/data2.dat";
     write_to_file(s2, fpath2);
-//    plot "dice.dat" using 0:2:xtic(1) with boxes notitle
+//    binwidth=1.0; set boxwidth binwidth; bin(x,width)=width*floor(x/width); plot 'data2.dat' using (bin($1,binwidth)):(1.0) smooth freq with boxes
 //    でプロット
-
     return 0;
 }
