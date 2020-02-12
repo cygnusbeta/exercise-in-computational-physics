@@ -3,5 +3,6 @@ project(cpp)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_compile_options(-pthread)
+find_package (Threads)
 add_executable(cpp multithread.cpp)
+target_link_libraries (myapp ${CMAKE_THREAD_LIBS_INIT})
