@@ -14,8 +14,8 @@ int main() {
         numsChip[giveTo] += 1;
     }
     string s1;
-    for (int i = 0; i < nPeople; i++) {
-        s1 += to_string(numsChip[i]) + "\n";
+    for (int i : numsChip) {
+        s1 += to_string(i) + "\n";
     }
     string fpath1 = "../out/dice_game/data1.dat";
     write_to_file(s1, fpath1);
@@ -28,13 +28,13 @@ int main() {
         do {
             giveFrom = get_random_0_to_n(nPeople);
             giveTo = get_random_0_to_n(nPeople);
-        } while (giveTo == giveFrom || numsChip[giveFrom] <= 0);
+        } while (giveTo == giveFrom || numsChip[giveFrom] == 0);
         numsChip[giveFrom] -= 1;
         numsChip[giveTo] += 1;
     }
     string s2;
-    for (int i = 0; i < nPeople; i++) {
-        s2 += to_string(numsChip[i]) + "\n";
+    for (int i : numsChip) {
+        s2 += to_string(i) + "\n";
     }
     string fpath2 = "../out/dice_game/data2.dat";
     write_to_file(s2, fpath2);
