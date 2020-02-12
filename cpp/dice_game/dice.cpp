@@ -1,4 +1,6 @@
 #include <string>
+#include <iostream>
+#include <iomanip>
 #include "../util2.h"
 
 using namespace std;
@@ -23,6 +25,7 @@ int main() {
 //    でプロット
 
 //    exchange
+    cout << "Exchanging... " << flush;
     for (long i = 0; i < nExchange; i++) {
         int giveFrom, giveTo;
         do {
@@ -32,7 +35,7 @@ int main() {
         numsChip[giveFrom] -= 1;
         numsChip[giveTo] += 1;
         if (i % long(double(nExchange - 1) * 0.1) == 0) {
-            printf("Exchanging... %2.0lf%%\n", 100.0 * double(i) / double(nExchange));
+            cout << setprecision(2) << 100.0 * double(i) / double(nExchange) << "% "<< flush;
         }
     }
     string s2;
