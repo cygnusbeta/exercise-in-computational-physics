@@ -6,10 +6,7 @@ using namespace std;
 
 int main() {
     const int nPeople = 50, nChip = 500, numExchange = 100000;
-    int numsChip[nPeople];
-    for (int i = 0; i < nPeople; i++) {
-        numsChip[i] = 0;
-    }
+    int numsChip[nPeople] = {};
 
 //    distribute
     for (int i = 0; i < nChip; i++) {
@@ -18,10 +15,7 @@ int main() {
     }
 
 //    count chips
-    int histogram[nChip];
-    for (int i = 0; i < nChip; i++) {
-        histogram[i] = 0;
-    }
+    int histogram[nChip] = {};
     for (int i = 0; i < nPeople; i++) {
         int numChip = numsChip[i];
         histogram[numChip] += 1;
@@ -54,10 +48,7 @@ int main() {
     }
 
 //    count chips
-    int histogram2[nChip];
-    for (int i = 0; i < nChip; i++) {
-        histogram2[i] = 0;
-    }
+    int histogram2[nChip] = {};
     for (int i = 0; i < nPeople; i++) {
         int numChip = numsChip[i];
         histogram2[numChip] += 1;
