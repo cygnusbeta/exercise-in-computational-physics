@@ -3,4 +3,5 @@ project(cpp)
 
 set(CMAKE_CXX_STANDARD 14)
 
+add_compile_options(-pthread)
 add_executable(cpp multithread.cpp)
