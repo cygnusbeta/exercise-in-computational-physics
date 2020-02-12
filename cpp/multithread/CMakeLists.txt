@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 find_package (Threads)
 add_executable(cpp multithread.cpp)
-target_link_libraries (myapp ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries (cpp ${CMAKE_THREAD_LIBS_INIT})
