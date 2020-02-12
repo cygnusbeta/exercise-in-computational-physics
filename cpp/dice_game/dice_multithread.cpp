@@ -34,7 +34,7 @@ void worker(int iThread)
 }
 
 int main() {
-    printf("nCpuThread: %d", nCpuThread);
+    printf("nCpuThread: %d\n", nCpuThread);
 //    distribute
     for (int i = 0; i < nChip; i++) {
         int giveTo = get_random_0_to_n(nPeople);
