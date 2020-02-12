@@ -13,7 +13,7 @@ int numsChip[nPeople] = {};
 int nCpuThread = int(thread::hardware_concurrency());
 
 void changeCounter(int giveFrom, int giveTo) {
-    // lock_guard<mutex> lock(mtx_);
+    lock_guard<mutex> lock(mtx_);
     numsChip[giveFrom] -= 1;
     numsChip[giveTo] += 1;
 }
