@@ -1,4 +1,3 @@
-#include <cstdio>
 #include <string>
 #include "../util2.h"
 
@@ -14,8 +13,8 @@ int main() {
         numsChip[giveTo] += 1;
     }
     string s1;
-    for (int i : numsChip) {
-        s1 += to_string(i) + "\n";
+    for (int v : numsChip) {
+        s1 += to_string(v) + "\n";
     }
     string fpath1 = "../out/dice_game/data1.dat";
     write_to_file(s1, fpath1);
@@ -33,8 +32,8 @@ int main() {
         numsChip[giveTo] += 1;
     }
     string s2;
-    for (int i : numsChip) {
-        s2 += to_string(i) + "\n";
+    for (int v : numsChip) {
+        s2 += to_string(v) + "\n";
     }
     string fpath2 = "../out/dice_game/data2.dat";
     write_to_file(s2, fpath2);
