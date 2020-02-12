@@ -35,7 +35,7 @@ int main() {
         numsChip[giveFrom] -= 1;
         numsChip[giveTo] += 1;
         if (i % long(double(nExchange - 1) * 0.1) == 0) {
-            cout << setprecision(2) << 100.0 * double(i) / double(nExchange) << "% "<< flush;
+            cout << setprecision(3) << 100.0 * double(i) / double(nExchange) << "% "<< flush;
         }
     }
     string s2;
