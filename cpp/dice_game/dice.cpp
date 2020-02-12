@@ -4,7 +4,8 @@
 using namespace std;
 
 int main() {
-    const int nPeople = 100000, nChip = 10000000, numExchange = 1000000000;
+    const int nPeople = 100000, nChip = 10000000;
+    const long nExchange = 1000000000;
     int numsChip[nPeople] = {};
 
 //    distribute
@@ -22,7 +23,7 @@ int main() {
 //    でプロット
 
 //    exchange
-    for (int i = 0; i < numExchange; i++) {
+    for (long i = 0; i < nExchange; i++) {
         int giveFrom, giveTo;
         do {
             giveFrom = get_random_0_to_n(nPeople);
@@ -30,6 +31,9 @@ int main() {
         } while (giveTo == giveFrom || numsChip[giveFrom] == 0);
         numsChip[giveFrom] -= 1;
         numsChip[giveTo] += 1;
+        if (i % long(double(nExchange - 1) * 0.1) == 0) {
+            printf("Exchanging... %2.0lf%%\n", 100.0 * double(i) / double(nExchange));
+        }
     }
     string s2;
     for (int v : numsChip) {
