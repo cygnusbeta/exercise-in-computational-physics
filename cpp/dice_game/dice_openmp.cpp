@@ -26,6 +26,8 @@ void exchange() {
 }
 
 int main() {
+    clock_t start = clock();
+
 //    distribute
     for (int i = 0; i < nChip; i++) {
         int giveTo = get_random_0_to_n(nPeople);
@@ -54,5 +56,10 @@ int main() {
     write_to_file(s2, fpath2);
 //    binwidth=1.0; set boxwidth binwidth; bin(x,width)=width*floor(x/width); plot 'data2.dat' using (bin($1,binwidth)):(1.0) smooth freq with boxes
 //    でプロット
+
+    clock_t end = clock();
+    const double time = double(end - start) / CLOCKS_PER_SEC;
+    printf("Process finished. (%2.1f s)\n", time);
+
     return 0;
 }
