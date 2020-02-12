@@ -3,4 +3,6 @@ project(cpp)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(cpp multithread/multithread.cpp)
+find_package (Threads)
+add_executable(cpp dice_game/dice_multithread.cpp)
+target_link_libraries (cpp ${CMAKE_THREAD_LIBS_INIT})
