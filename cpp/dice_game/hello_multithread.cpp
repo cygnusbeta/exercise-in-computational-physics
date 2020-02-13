@@ -5,7 +5,7 @@
 using container = std::vector<std::atomic<double>>;
 using container_size_type = container::size_type;
 
-container c(300);
+container c(100);
 
 std::atomic<container::pointer> p_busy_elem{ nullptr };
 
@@ -50,10 +50,10 @@ int main()
     std::thread t_reader{ reader };
     t_editor.join();
     t_reader.join();
-    double sum = 0;
+    int sum = 0;
     for (container_size_type i{ 0 }, sz{ c.size() }; i < sz; ++i)
     {
         sum += c[i];
     }
-    printf("sum = %lf\n", sum);
+    printf("sum = %d\n", sum);
 }
