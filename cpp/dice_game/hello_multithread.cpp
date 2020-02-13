@@ -42,8 +42,18 @@ void reader()
 
 int main()
 {
+    for (container_size_type i{ 0 }, sz{ c.size() }; i < sz; ++i)
+    {
+        c[i] = i;
+    }
     std::thread t_editor{ editor };
     std::thread t_reader{ reader };
     t_editor.join();
     t_reader.join();
+    double sum = 0;
+    for (container_size_type i{ 0 }, sz{ c.size() }; i < sz; ++i)
+    {
+        sum += c[i];
+    }
+    printf("sum = %lf\n", sum);
 }
