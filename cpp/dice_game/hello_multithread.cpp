@@ -16,7 +16,7 @@ std::atomic<container::pointer> p_busy_elem_to{ nullptr };
 const int nCpuThread = int(thread::hardware_concurrency());
 const int nExchange = 10000;
 
-bool try_change(int giveFrom, int giveTo, bool breaked) {
+bool try_change(container_size_type giveFrom, container_size_type giveTo, bool breaked) {
     // A1: wait for editor thread to finish editing value
     while (p_busy_elem_from == &c[giveFrom] || p_busy_elem_to == &c[giveTo] || p_busy_elem_from == &c[giveTo] || p_busy_elem_to == &c[giveFrom])
     {
@@ -46,11 +46,10 @@ void editor(int iThread)
 {
     for (int i = iThread; i < nExchange; i += nCpuThread) {
 //        printf("i = %d\n", i);
-        int giveFrom, giveTo;
         bool breaked = false;
         while (!breaked) {
-            giveFrom = get_random_0_to_n(c.size());
-            giveTo = get_random_0_to_n(c.size());
+            container_size_type giveFrom { static_cast<container_size_type>(get_random_0_to_n(c.size())) };
+            container_size_type giveTo { static_cast<container_size_type>(get_random_0_to_n(c.size())) };
             if (giveTo != giveFrom) {
                 breaked = try_change(giveFrom, giveTo, breaked);
             }
@@ -61,7 +60,7 @@ void editor(int iThread)
 int main()
 {
     for (container_size_type i{ 0 }, sz{ c.size() }; i < sz; ++i) {
-        c[i] = i;
+        c[i] = int(i);
     }
 //    std::thread t_editor{ editor };
 //    std::thread t_reader{ reader };
