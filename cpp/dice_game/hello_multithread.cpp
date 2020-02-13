@@ -36,7 +36,7 @@ void reader()
 
         // C: c[i] might have changed by this time, but we had the most up to date value we could get without checking again
         // ... use value ...
-        printf("%lf\n", c[i]);
+        printf("%lf\n", value);
     }
 }
 

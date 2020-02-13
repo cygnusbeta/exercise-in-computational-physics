@@ -4,7 +4,7 @@ project(cpp)
 set(CMAKE_CXX_STANDARD 14)
 
 find_package (Threads)
-add_executable(cpp dice_game/dice_openmp.cpp)
+add_executable(cpp dice_game/hello_multithread.cpp)
 target_link_libraries (cpp ${CMAKE_THREAD_LIBS_INIT})
 
 # For OpenMP
