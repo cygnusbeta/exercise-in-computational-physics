@@ -5,17 +5,20 @@
 
 using namespace std;
 
-using container = std::vector<std::atomic<double>>;
+using container = std::vector<std::atomic<int>>;
 using container_size_type = container::size_type;
 
-container c(100);
+container c(10);
 
 std::atomic<container::pointer> p_busy_elem_from{ nullptr };
 std::atomic<container::pointer> p_busy_elem_to{ nullptr };
 
+const int nCpuThread = int(thread::hardware_concurrency());
+const int nExchange = 10000;
+
 bool try_change(int giveFrom, int giveTo, bool breaked) {
     // A1: wait for editor thread to finish editing value
-    while (p_busy_elem_from == &c[giveFrom] || p_busy_elem_to == &c[giveTo])
+    while (p_busy_elem_from == &c[giveFrom] || p_busy_elem_to == &c[giveTo] || p_busy_elem_from == &c[giveTo] || p_busy_elem_to == &c[giveFrom])
     {
         // A2: room a better algorithm to prevent blocking/yielding
         std::this_thread::yield();
@@ -39,15 +42,18 @@ bool try_change(int giveFrom, int giveTo, bool breaked) {
     return breaked;
 }
 
-void editor()
+void editor(int iThread)
 {
-    int giveFrom, giveTo;
-    bool breaked = false;
-    while (!breaked) {
-        giveFrom = get_random_0_to_n(c.size());
-        giveTo = get_random_0_to_n(c.size());
-        if (giveTo != giveFrom) {
-            breaked = try_change(giveFrom, giveTo, breaked);
+    for (int i = iThread; i < nExchange; i += nCpuThread) {
+//        printf("i = %d\n", i);
+        int giveFrom, giveTo;
+        bool breaked = false;
+        while (!breaked) {
+            giveFrom = get_random_0_to_n(c.size());
+            giveTo = get_random_0_to_n(c.size());
+            if (giveTo != giveFrom) {
+                breaked = try_change(giveFrom, giveTo, breaked);
+            }
         }
     }
 }
@@ -63,10 +69,10 @@ int main()
 //    t_reader.join();
 
     // spawn n threads:
-    int nExchange = 10000;
-    vector<thread> threads(nExchange);
-    for (int iThread = 0; iThread < nExchange; iThread++) {
-        threads[iThread] = std::thread { editor };
+    printf("nCpuThread = %d\n", nCpuThread);
+    vector<thread> threads(nCpuThread);
+    for (int iThread = 0; iThread < nCpuThread; iThread++) {
+        threads[iThread] = std::thread { editor, iThread };
     }
     for (auto& t : threads) {
         t.join();
