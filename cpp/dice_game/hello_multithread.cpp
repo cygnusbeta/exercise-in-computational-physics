@@ -29,7 +29,7 @@ bool try_change(int giveFrom, int giveTo, bool breaked) {
     auto valueTo = c[giveTo].load();
     // C: c[i] might have changed by this time, but we had the most up to date value we could get without checking again
     // ... use value ...
-    if (c[giveFrom] != 0) {
+    if (valueFrom != 0) {
         c[giveFrom] = valueFrom - 1;
         c[giveTo] =  valueTo + 1;
         breaked = true;
@@ -73,7 +73,7 @@ int main()
     }
     int sum = 0;
     for (container_size_type i{ 0 }, sz{ c.size() }; i < sz; ++i) {
-        printf("c[%d] = %d\n", i, int(c[i]));
+        printf("c[%d] = %d\n", int(i), int(c[i]));
         sum += c[i];
     }
     printf("sum = %d\n", sum);
