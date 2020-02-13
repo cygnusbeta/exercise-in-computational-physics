@@ -1,9 +1,10 @@
 #include <vector>
 #include <atomic>
 #include <thread>
+#include <iostream>
 #include "../util2.h"
 
-using namespace std;
+//using namespace std;
 
 using container = std::vector<std::atomic<int>>;
 using container_size_type = container::size_type;
@@ -13,11 +14,15 @@ container c(10);
 std::atomic<container::pointer> p_busy_elem_from{ nullptr };
 std::atomic<container::pointer> p_busy_elem_to{ nullptr };
 
+//const int nCpuThread = int(thread::hardware_concurrency());
 const int nCpuThread = int(thread::hardware_concurrency());
+
 const int nExchange = 10000;
 
 bool try_change(container_size_type giveFrom, container_size_type giveTo, bool breaked) {
     // A1: wait for editor thread to finish editing value
+    std::cout << "&c[giveFrom] = " << &c[giveFrom] << std::endl;
+    std::cout << "p_busy_elem_from = " << p_busy_elem_from << std::endl;
     while (p_busy_elem_from == &c[giveFrom] || p_busy_elem_to == &c[giveTo] || p_busy_elem_from == &c[giveTo] || p_busy_elem_to == &c[giveFrom])
     {
         // A2: room a better algorithm to prevent blocking/yielding
