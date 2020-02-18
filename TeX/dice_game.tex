@@ -1,0 +1,310 @@
+\documentclass[ % ドキュメントクラス
+  platex,%upLaTeXを使う
+  papersize,%紙のサイズがデフォルトと違う場合、PDFにうまく伝える
+  twocolumn,
+  landscape
+]{jsarticle}
+
+%% フォント関連
+\usepackage[T1]{fontenc} % フォントでT1を使うこと
+\usepackage{textcomp} % フォントでTS1を使うこと
+\usepackage[utf8]{inputenc} % ファイルがUTF8であること
+\usepackage{newpxtext,newpxmath} % ローマンと数式の字体をPalatinoに基づいた新PXフォントで
+\usepackage{zi4}%等幅フォントをInconsolataで
+\usepackage[multi,deluxe,jis2004]{otf}
+% \usepackage[prefernoncjk]{pxcjkcat} % なるべく「半角」扱いで。
+% \cjkcategory{sym18}{cjk} % sym18 (U+25A0 - U+25FF Geometric Shapes) を和文文字あつかい
+
+%% 図表など
+% 図の読みこみのために
+\usepackage[dvipdfmx, hiresbb]{graphicx, xcolor}
+\usepackage{booktabs} % 表の横罫線
+\usepackage{lscape}  % 表などを90度回転させる
+
+%% 囲み枠
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable} % ページをまたいで分割できるように
+
+% ソースコードをきれいに出力する
+\usepackage{listings}
+\lstset{ % 色々な設定
+    language=Python, % プログラミング言語名（ここではR言語）
+    basicstyle=\ttfamily, % 基本的にタイプライター体にする
+    numbers=left, % 左側に行番号を表示
+    numberstyle=\small, % 行番号は小さめに
+    numbersep=16pt, % 行番号をどれだけ離すか
+    % showspaces=true,% スペースを表示したければtrueにする
+    xleftmargin=25pt, % 左側のマージン
+    frame=single, %ソースコードを囲むフレーム
+    framesep=10pt, %フレームとコードの間隔
+    backgroundcolor=\color[gray]{0.95}, % 背景色
+    breaklines=true % 長い行は改行する
+}
+\renewcommand{\lstlistingname}{ソースコード}
+
+% misc
+\usepackage{okumacro} % 圏点などのため
+\usepackage{pxrubrica} % ルビをつける（okumacroのrubyは使わない）
+
+% hyperrefの設定
+\usepackage[dvipdfmx,%
+   bookmarks=true,%PDFにしおりをつける
+   bookmarksnumbered=true,%しおりに節番号などをつける
+   colorlinks=false,%リンクには色をつけない
+   hyperfootnotes=false,%脚注からのリンクを作らない
+   pdfborder={0 0 0},%枠なし
+   pdfpagemode=UseNone]{hyperref}
+
+% PDFにしたときの文字化けを防ぐ
+\usepackage{pxjahyper}
+
+\usepackage{here}
+
+\title{計算物理演習レポート3 サイコロゲーム}
+\author{}
+\date{2020年2月25日}
+
+\begin{document}
+\maketitle
+
+\section{概要}
+サイコロゲームの数値計算を行い、計算結果を理論的に考察した。
+
+\section{チップの配布}\label{s-dist}
+\subsection{計算内容}
+nChip枚のチップをnPeople人に配布し、一人が持っているチップの枚数をヒストグラムでプロットする。
+
+0～nPeople-1の番号が振られた人の誰に配布するかは、[0,1)の一様分布をnPeople倍してfloorしたものを用いた。
+
+各パラメータは、人数nPeople = 100000, チップの枚数nChip = 10000000とした\\
+
+\subsection{ソースコード}\label{dist-code}
+以下はチップ授受のコード(\ref{s-exchange}で後述)も含む。
+
+dice.cpp
+\begin{lstlisting}[]
+#include <string>
+#include <iostream>
+#include <iomanip>
+#include "../util2.h"
+
+using namespace std;
+
+int main() {
+    const int nPeople = 100000, nChip = 10000000;
+    const long nExchange = 1000000000;
+    int numsChip[nPeople] = {};
+
+//    distribute
+    for (int i = 0; i < nChip; i++) {
+        int giveTo = get_random_0_to_n(nPeople);
+        numsChip[giveTo] += 1;
+    }
+    string s1;
+    for (int v : numsChip) {
+        s1 += to_string(v) + "\n";
+    }
+    string fpath1 = "../out/dice_game/data1.dat";
+    write_to_file(s1, fpath1);
+//    filter(x,y)=int(x/y)*y; plot "data1.dat" u (filter($1,0.001)):(1) smooth frequency with boxes
+//    でプロット
+
+//    exchange
+    cout << "Exchanging... " << flush;
+    for (long i = 0; i < nExchange; i++) {
+        int giveFrom, giveTo;
+        do {
+            giveFrom = get_random_0_to_n(nPeople);
+            giveTo = get_random_0_to_n(nPeople);
+        } while (giveTo == giveFrom || numsChip[giveFrom] == 0);
+        numsChip[giveFrom] -= 1;
+        numsChip[giveTo] += 1;
+        if (i % long(double(nExchange - 1) * 0.1) == 0) {
+            cout << setprecision(3) << 100.0 * double(i) / double(nExchange) << "% " << flush;
+        }
+    }
+    string s2;
+    for (int v : numsChip) {
+        s2 += to_string(v) + "\n";
+    }
+    string fpath2 = "../out/dice_game/data2.dat";
+    write_to_file(s2, fpath2);
+//    binwidth=1.0; set boxwidth binwidth; bin(x,width)=width*floor(x/width); plot 'data2.dat' using (bin($1,binwidth)):(1.0) smooth freq with boxes
+//    でプロット
+    return 0;
+}
+\end{lstlisting}
+
+util2.h
+\begin{lstlisting}[]
+#pragma once
+
+#include <fstream>
+#include <random>
+
+using namespace std;
+
+inline int get_random_0_to_n(int n) {
+    // 乱数生成器
+    static mt19937_64 mt64(0);
+
+    // 0, 1, ... , n - 1 の一様分布整数生成器
+    uniform_real_distribution<double> get_rand_uni_real(0.0, double(n));
+    // 乱数を生成
+    double numRandom = get_rand_uni_real(mt64);
+    return int(floor(numRandom));
+}
+
+inline int write_to_file(const string& s, const string& fpath) {
+    ofstream f;
+    f.open(fpath);
+    f << s;
+    f.close();
+    return 0;
+}
+\end{lstlisting}
+\leavevmode\\
+
+\subsection{計算結果}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=8cm]{../cpp/out/dice_game/data1.png}
+\end{center}
+\caption{}
+\end{figure}
+
+\subsection{考察}
+チップの枚数nChipを$M$、人数nPeopleを$N$と置く。一様乱数は$1,2,\cdots,N$の離散的な値に対して発生するので、一つの$x$に対して乱数の値が$x$となる確率$p$は
+\begin{align}
+  p=&\frac{1}{N}&
+\end{align}
+である。これを1回の試行とする。これを乱数の数$M$個分繰り返すので、$M$回試行したときには、一つの$x$に対して乱数の値$k$回$x$となる確率$P_M(k)$は二項分布となり
+\begin{align}
+  P_M(k)=&{}_M \mathrm{C}_k p^k (1-p)^{M-k}&\\
+\end{align}
+となる。この二項分布のモーメントの母関数$M(\theta)$は
+\begin{align}
+  M(\theta)\equiv&E[e^{\theta k}]&\\
+  =&\sum_{k=1}^{M}e^{\theta k}{}_M \mathrm{C}_k p^k (1-p)^{M-k}&\\
+  =&\sum_{k=1}^{M}{}_M \mathrm{C}_k \left(pe^{\theta}\right)^k (1-p)^{M-k}&\\
+  =&\left(pe^{\theta}+(1-p)\right)^M&\\
+\end{align}
+より、期待値$E[k]$は
+\begin{align}
+  E[k]\equiv&\left.\frac{dM(\theta)}{d\theta}\right|_{\theta\rightarrow0}&\\
+  =&\left.Mpe^{\theta}\left(pe^{\theta}+(1-p)\right)^{M-1}\right|_{\theta\rightarrow0}&\\
+  =&Mp&
+\end{align}
+分散$\sigma^{2}[k]$は
+\begin{align}
+  \sigma^{2}[k]\equiv&\left.\frac{d^{2}M(\theta)}{d\theta^2}\right|_{\theta\rightarrow0}-E[k]^2&\\
+  =&\left.\left(Mpe^{\theta}\left(pe^{\theta}+(1-p)\right)^{M-1}+M(M-1)p^{2}e^{2\theta}\left(pe^{\theta}+(1-p)\right)^{M-2}\right)\right|_{\theta\rightarrow0}&-E[k]^2\\
+  =&Mp+M(M-1)p^{2}-(Mp)^2&\\
+  =&Mp(1-p)&
+\end{align}
+より、標準偏差$\sigma[k]$は
+\begin{align}
+  \sigma[k]=&\sqrt{Mp(1-p)}&
+\end{align}
+
+
+\begin{align}
+  P_M(x)=&{}_M \mathrm{C}_k p(x)^k (1-p(x))^{M-k}&\\
+  =&\frac{M!}{k!(M-k)!}\left(\frac{1}{N}\right)^k \left(1-\frac{1}{N}\right)^{M-k}&\\
+  \sim&\left(\frac{M}{e}\right)^{M}\left(\frac{e}{k}\right)^{k}\left(\frac{e}{M-k}\right)^{M-k}\left(\frac{1}{N}\right)^k \left(1-\frac{1}{N}\right)^{M-k}&\\
+  =&\left(\frac{M}{e}\right)^{M}\left(\frac{e}{kN}\right)^{k}\left(\frac{e(N-1)}{(M-k)N}\right)^{M-k}&\\
+  =&\left(\frac{Me(N-1)}{e(M-k)N}\right)^{M}\left(\frac{e(M-k)N}{kNe(N-1)}\right)^{k}&\\
+  \sim&\left(\frac{M}{M-k}\right)^{M}\left(\frac{M-k}{kN}\right)^{k}&
+\end{align}
+となる。ただし、途中でスターリングの公式$n!\sim(\frac{n}{e})^n$、及び$N>>1$を用いた。
+
+$M=10000000, N=100000$を代入すると、ヒストグラム$f(k)$は
+\begin{align}
+  f(k)\equiv&\left(\frac{10000000}{10000000-k}\right)^{10000000}\left(\frac{10000000-k}{100000k}\right)^{k}&
+\end{align}
+
+期待値と標準偏差を考えれば良い。
+
+まず、1枚配ったときを考える。生成する乱数を$p(x)$と置くとこれは一様分布であるから、1枚配ったときの1人あたりの確率は全員等しく$p(x)=\frac{1}{N}$である。この期待値$E_1[x]$は
+\begin{align}
+  E_1[x]=&\sum_{x=1}^{N} x\frac{1}{N}&\\
+  =&\frac{N+1}{2}&\\
+  \sim&\frac{N}{2}&
+\end{align}
+標準偏差$\sigma_1[x]$は
+\begin{align}
+  \sigma_1[x]=&\sqrt{\left(\sum_{x=1}^{N} x^2\frac{1}{N}\right)-E_1[x]^2}&\\
+  =&\sqrt{\frac{(N+1)(N+2)}{6}-\frac{N^2}{4}}&\\
+  \sim&\frac{N}{2\sqrt{3}}&
+\end{align}
+である。
+
+次にM枚配った場合を考える。2枚以上配ったときはこれら確率変数の足し算となるが、今$M>>1$より中心極限定理が成り立つから、$M$枚配ったときの確率分布による期待値$E_M[x]=E_1[x]$、標準偏差$\sigma_M[x]=\sigma_1[x]$
+
+\section{チップの授受}\label{s-exchange}
+\subsection{計算内容}
+次に配布されたチップを交換していく。まず、\ref{s-dist}と同じの分布を使い、ランダムに2人を決定する。2人が同一人物だったり、チップをあげる人がチップを1枚も持っていなかった場合は乱数を再生成する。そしてチップを手渡す。これをnExchange回繰り返し、一人が持っているチップの枚数をヒストグラムでプロットする。
+
+各パラメータは、交換回数nExchange = 1000000000とした\\
+
+\subsection{ソースコード}
+\ref{dist-code}に既に記載。
+
+\subsection{計算結果}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=8cm]{../cpp/out/dice_game/data2.png}
+\end{center}
+\caption{}
+\end{figure}
+
+\subsection{考察}
+計算結果は次のようにして説明できる。
+
+チップの枚数nChipを$M$、人数nPeopleを$N$と置くと、まず、チップの配布の総組み合わせ$W(N,M)$は、丸○がnChip個と仕切り|がnPeople個の並び方と考えることができるから、
+\begin{align}
+  W(N,M)=\frac{(M+N-1)!}{M!(N-1)!}
+\end{align}
+通り。ここである人が$x$枚チップを持っている場合の状態数$W(N-1,M-1)$を考えると、残りの人の状態を数え上げればよいから、
+\begin{align}
+  W(N-1,M-1)&=\frac{(M-x+N-2)!}{(M-x)!(N-2)!}&
+\end{align}
+通りである。よって、総組み合わせに対する条件付き確率の密度関数は
+\begin{align}
+  p(x;N,M)=&\frac{W(N-1,M-1)}{W(N,M)}&\\
+  =&\frac{(M-x+N-2)!}{(M-x)!(N-2)!}\frac{M!(N-1)!}{(M+N-1)!}&\\
+  \sim&\left(\frac{M-x+N-2}{e}\right)^{M-x+N-2}\left(\frac{e}{M-x}\right)^{M-x}\left(\frac{e}{N-2}\right)^{N-2}\cdot\relax&\\\nonumber&\left(\frac{M}{e}\right)^{M}\left(\frac{N-1}{e}\right)^{N-1}\left(\frac{e}{M+N-1}\right)^{M+N-1}&\\
+  =&\left(\frac{M-x+N-2}{M-x}\right)^{M-x}\left(\frac{M-x+N-2}{N-2}\right)^{N-2}\left(\frac{M}{M+N-1}\right)^{M}\left(\frac{N-1}{M+N-1}\right)^{N-1}&\\
+  =&\left(\frac{(M-x+N-2)M}{(M-x)(M+N-1)}\right)^{M}\left(\frac{M-x}{M-x+N-2}\right)^{x}\left(\frac{M-x+N-2}{N-2}\right)^{N-2}\left(\frac{N-1}{M+N-1}\right)^{N-1}&\\
+  \sim&\left(\frac{(M+N)M}{M(M+N)}\right)^{M}\left(\frac{M}{M+N}\right)^{x}\left(\frac{M+N}{N}\right)^{N-2}\left(\frac{N}{M+N}\right)^{N-1}&\\
+  =&\frac{N}{M+N}\left(\frac{M}{M+N}\right)^{x}&
+\end{align}
+ただし、途中でスターリングの公式$n!\sim(\frac{n}{e})^n$、及び$M>>x$と$N>>1$を用いた。
+
+データ数$N$より先程プロットしたヒストグラムはこの確率密度関数を$N$倍したものとなる。$M=10000000, N=100000$を代入すると、
+\begin{align}
+  f(x)\equiv&N\cdot p(x;N,M)&\\
+  =&\frac{N^2}{M+N}\left(\frac{M}{M+N}\right)^{x}&\\
+  \sim&990.1\cdot0.9901^{x}&
+\end{align}
+これを先程の図に重ねてプロットすると
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=8cm]{../cpp/out/dice_game/data2_with_theory.png}
+\end{center}
+\caption{計算結果(理論値付き)}
+\end{figure}
+となり計算結果とよく一致する。よって計算結果は妥当といえる。
+
+\begin{thebibliography}{99}
+\bibitem{sit}
+統計力学入門の為のゲーム(課題１、２含む)
+http://www.scc.kyushu-u.ac.jp/BioChemPhys/ko-gi/game09.pdf
+
+\bibitem{random}
+乱数とヒストグラム モデリングとシミュレーション
+http://aoba.cc.saga-u.ac.jp/lecture/ModelingAndSimulation/PDF/Random.pdf
+
+\end{thebibliography}
+
+\end{document}
