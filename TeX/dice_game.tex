@@ -182,24 +182,24 @@ inline int write_to_file(const string& s, const string& fpath) {
 \begin{align}
   P_M(k)=&{}_M \mathrm{C}_k p^k (1-p)^{M-k}&\\
 \end{align}
-と表せる。この二項分布のモーメントの母関数$M(\theta)$は
+と表せる。この二項分布のモーメントの母関数$\textrm{M}(\theta)$は
 \begin{align}
-  M(\theta)\equiv&E[e^{\theta k}]&\\
+  \textrm{M}(\theta)\equiv&\textrm{E}[e^{\theta k}]&\\
   =&\sum_{k=1}^{M}e^{\theta k}{}_M \mathrm{C}_k p^k (1-p)^{M-k}&\\
   =&\sum_{k=1}^{M}{}_M \mathrm{C}_k \left(pe^{\theta}\right)^k (1-p)^{M-k}&\\
   =&\left(pe^{\theta}+(1-p)\right)^M&\\
 \end{align}
-より、期待値$E[k]$は
+より、期待値$\textrm{E}[k]$は
 \begin{align}
-  E[k]\equiv&\left.\frac{dM(\theta)}{d\theta}\right|_{\theta\rightarrow0}&\\
+  \textrm{E}[k]\equiv&\left.\frac{\textrm{d}\textrm{M}(\theta)}{\textrm{d}\theta}\right|_{\theta\rightarrow0}&\\
   =&\left.Mpe^{\theta}\left(pe^{\theta}+(1-p)\right)^{M-1}\right|_{\theta\rightarrow0}&\\
   =&Mp&\\
   =&\frac{M}{N}&
 \end{align}
 分散$\sigma^{2}[k]$は$N>>1$に注意すると
 \begin{align}
-  \sigma^{2}[k]\equiv&\left.\frac{d^{2}M(\theta)}{d\theta^2}\right|_{\theta\rightarrow0}-E[k]^2&\\
-  =&\left.\left(Mpe^{\theta}\left(pe^{\theta}+(1-p)\right)^{M-1}+M(M-1)p^{2}e^{2\theta}\left(pe^{\theta}+(1-p)\right)^{M-2}\right)\right|_{\theta\rightarrow0}&-E[k]^2\\
+  \sigma^{2}[k]\equiv&\left.\frac{\textrm{d}^{2}\textrm{M}(\theta)}{\textrm{d}\theta^2}\right|_{\theta\rightarrow0}-\textrm{E}[k]^2&\\
+  =&\left.\left(Mpe^{\theta}\left(pe^{\theta}+(1-p)\right)^{M-1}+M(M-1)p^{2}e^{2\theta}\left(pe^{\theta}+(1-p)\right)^{M-2}\right)\right|_{\theta\rightarrow0}&-\textrm{E}[k]^2\\
   =&Mp+M(M-1)p^{2}-(Mp)^2&\\
   =&Mp(1-p)&\\
   =&\frac{M}{N}\left(1-\frac{1}{N}\right)&\\
@@ -210,14 +210,14 @@ inline int write_to_file(const string& s, const string& fpath) {
 \begin{align}
   \sigma[k]=&\sqrt{\frac{M}{N}}&
 \end{align}
-と表せる。$M=10000000, N=100000$を代入すると期待値$E[k]$と標準偏差$\sigma[k]$はそれぞれ
+と表せる。$M=10000000, N=100000$を代入すると期待値$\textrm{E}[k]$と標準偏差$\sigma[k]$はそれぞれ
 \begin{align}
-  E[k]=&100&\\
+  \textrm{E}[k]=&100&\\
   \sigma[k]=&10&
 \end{align}
 となる。実際に計算結果を見ると平均およそ$100$、標準偏差はおよそ$10$と読み取れるので、これは計算結果と視覚的には一致している。
 
-実際に理論値を重ねてプロットしてみる。今、$M>>1,E[k]>>1,\sigma^{2}[k]>>1$より、二項分布$B(M,p)$は正規分布$N\left(Mp,Mp(1-p)\right)$で近似できるので、確率$P_M(k)$は
+実際に理論値を重ねてプロットしてみる。今、$M>>1,\textrm{E}[k]>>1,\sigma^{2}[k]>>1$より、二項分布$B(M,p)$は正規分布$N\left(Mp,Mp(1-p)\right)$で近似できるので、確率$P_M(k)$は
 \begin{align}
   P_M(k)\sim&\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(k-Mp)^2}{2\sigma^2}\right)&\\
   =&\frac{1}{\sqrt{2\pi\frac{M}{N}}}\exp\left({-\frac{(k-\frac{M}{N})^2}{2\frac{M}{N}}}\right)&
@@ -261,20 +261,20 @@ inline int write_to_file(const string& s, const string& fpath) {
 
 同様にチップの枚数nChipを$M$、人数nPeopleを$N$と置く。
 
-この系において系が平衡状態にあるとき、ある一つの粒子が離散的なエネルギー$k$である確率$p(k;N,M)$は、チップ$M$枚、人数$N$人のときにチップがどう分配されるのかを考え、「ある人の持つチップの枚数が$k$枚である確率$p(k;N,M)$」と本質的に等しいとみることができる。今回は計算可能なこれを計算していくこととする。
+この系において系が平衡状態にあるとき、ある一つの粒子が離散的なエネルギー$k$である確率$p(k;N,E)$は、チップ$M$枚、人数$N$人のときにチップがどう分配されるのかを考え、「ある人の持つチップの枚数が$k$枚である確率$p(k;N,M)$」と本質的に等しいとみることができる。今回は計算可能なこれを計算していくこととする。
 
 まず、チップの配布の総組み合わせ$W(N,M)$は、丸○がM個と仕切り|がN個の並び方と考えることができるから、
 \begin{align}
   W(N,M)=\frac{(M+N-1)!}{M!(N-1)!}
 \end{align}
 通り。ここである人が$k$枚チップを持っている場合の
-の数$W(N-1,M-1)$を考えると、残りの人の組み合わせの数を数え上げればよいから、
+の数$W(N-1,M-k)$を考えると、残りの人の組み合わせの数を数え上げればよいから、
 \begin{align}
-  W(N-1,M-1)&=\frac{(M-k+N-2)!}{(M-k)!(N-2)!}&
+  W(N-1,M-k)&=\frac{(M-k+N-2)!}{(M-k)!(N-2)!}&
 \end{align}
 通りである。よって、一つの粒子が離散的なエネルギー$k$である確率$p(k;N,M)$は、総組み合わせに対する条件付き確率であり
 \begin{align}
-  p(k;N,M)=&\frac{W(N-1,M-1)}{W(N,M)}&\\
+  p(k;N,M)=&\frac{W(N-1,M-k)}{W(N,M)}&\\
   =&\frac{(M-k+N-2)!}{(M-k)!(N-2)!}\frac{M!(N-1)!}{(M+N-1)!}&\\
   \sim&\left(\frac{M-k+N-2}{e}\right)^{M-k+N-2}\left(\frac{e}{M-k}\right)^{M-k}\left(\frac{e}{N-2}\right)^{N-2}\cdot\relax&\\\nonumber&\left(\frac{M}{e}\right)^{M}\left(\frac{N-1}{e}\right)^{N-1}\left(\frac{e}{M+N-1}\right)^{M+N-1}&\\
   =&\left(\frac{M-k+N-2}{M-k}\right)^{M-k}\left(\frac{M-k+N-2}{N-2}\right)^{N-2}\left(\frac{M}{M+N-1}\right)^{M}\left(\frac{N-1}{M+N-1}\right)^{N-1}&\\
